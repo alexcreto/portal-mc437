@@ -1,16 +1,18 @@
-<%= form_tag('/') do %>
+<div style="margin-left: 50px;">
+  <%= form_tag('/') do %>
 
-  <div>
-    <%= label_tag 'CPF' %><br />
-    <%= text_field_tag :cpf %>
-  </div>
+    <div>
+      <%= label_tag 'CPF' %><br />
+      <%= text_field_tag :cpf %>
+    </div>
 
-  <div>
-    <%= label_tag 'Senha' %><br />
-    <%= password_field_tag :pass %>
-  </div>
+    <div>
+      <%= label_tag 'Senha' %><br />
+      <%= password_field_tag :pass %>
+    </div>
 
-  <div>
-    <%= submit_tag 'Login' %>
-  </div>
-<% end %>
+    <div>
+      <%= submit_tag 'Login' %>
+    </div>
+  <% end %>
+</div>
