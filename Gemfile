@@ -7,6 +7,7 @@ gem 'rails', '3.2.7'
 
 gem 'pg'
 gem 'nestful'
+gem 'savon'
 gem 'json'
 
 # Gems used only for assets and not required

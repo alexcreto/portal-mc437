@@ -1,0 +1,82 @@
+
+/********** TABLE **********/
+
+.tabela {
+	position:relative;
+	margin:10px 25px 0px 25px;
+	background-color:#E0E0E0;
+	font-size:10px;
+}
+.tabela th {
+	background-color:#EEEEEE;
+	background-image:url(/assets/images-sprites-x.png);
+	background-position:0px -30px;
+	padding:6px 2px;
+	font-size: 14px;
+}
+.tabela td {
+	background-color:#FFFFFF;
+	padding:2px;
+	height:20px;
+	color:#333333;
+	width:auto;
+	font-size: 14px;
+}
+
+.tabela th a ins {
+	margin-bottom:0px;
+	*margin-bottom:2px;
+	text-decoration:underline;
+	display:inline-block;
+	margin-left:5px;
+	height:6px;
+	width:6px;
+	background-image:url(/assets/images/ui-icons_454545_256x240.png);
+}
+.tabela th a .insGridTitleAsc {
+	background-position:-86px -21px;
+}
+.tabela th a .insGridTitleDesc {
+	background-position:-118px -21px;
+}
+.tabela .trListTitleOver {
+	cursor:pointer;
+	background-image:none;
+	background-color:#CCCCCC;
+}
+
+
+/********** STATUS **********/
+
+.tabela .insStatus01 {
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	background-image:url(/assets/images.png);
+	background-position:-1px -265px;
+}
+.tabela .insStatus02 {
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	background-image:url(/assets/images.png);
+	background-position:-21px -265px;
+}
+.tabela .insStatus03 {
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	background-image:url(/assets/images.png);
+	background-position:-41px -265px;
+}
+.tabela .insStatus04 {
+	position:relative;
+	display:block;
+	width:10px;
+	height:10px;
+	background-image:url(/assets/images.png);
+	background-position:-61px -265px;
+}

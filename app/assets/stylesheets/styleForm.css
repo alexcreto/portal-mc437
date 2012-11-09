@@ -1,0 +1,292 @@
+.wFormContainer {
+padding: 30px 20px 20px 20px;
+}
+.wFormContainer {
+background-color: #EEF6FF;
+color: #36455E;
+border-color: #36455E;
+border-width: 3px;
+border-style: solid;
+margin: -3px;
+font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+-moz-box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+-moz-border-radius: 7px;
+-webkit-border-radius: 7px;
+border-radius: 7px;
+}
+
+.fsCadastro {
+margin: 0 0 1em 0;
+padding: .5em 1em 1.2em 1em;
+}
+.fsCadastro {
+border-color: #36455E;
+color: #36455E;
+border-width: 2px;
+border-style: solid;
+margin: -2px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+}
+
+.frmForm {
+	position:relative;
+	display:block;
+	padding-top:20px;
+}
+.frmForm fieldset {
+	position:relative;
+	display:block;
+	float:left;
+	width:395px;
+	border:0px;
+	margin:0px 0px 0px 35px;
+}
+.frmForm fieldset label {
+	position:relative;
+	display:block;
+	font-size:14px;
+	font-weight:bold;
+	color:#666666;
+	margin-bottom:5px;
+}
+.frmForm fieldset input, .frmForm fieldset select, .frmForm fieldset textarea {
+	font-size:13px;
+	font-weight:bold;
+	color:#999999;
+	display:block;
+	width:100%;
+	padding:3px 0px;
+	border:0px;
+	background-color:#F4F4F4;
+	margin-top:3px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.frmForm fieldset select {
+	height:22px;
+	*height:24px;
+}
+form fieldset label span {
+	display:block;
+	float:right;
+	font-weight:normal;
+	color:#999999;
+	font-size:13px;
+}
+
+/********** SUB-TITLES **********/
+
+.frmForm h3 {
+	display:block;
+	font-size:19px;
+	margin:10px 0px;
+	border:1px solid #CCCCCC;
+	background-color:#EEEEEE;
+	text-align:center;
+	color:#333333;
+	padding:3px;
+}
+.frmForm h4 {
+	display:block;
+	font-size:17px;
+	color:#333333;
+	margin:20px 0px 10px 0px;
+}
+
+/********** INPUT CHECKBOX **********/
+
+.frmForm fieldset .divFormCheckbox {
+	display:block;
+	margin-bottom:7px;
+	*margin-bottom:4px;
+}
+.frmForm fieldset .divFormCheckbox label {
+	display:inline;
+	width:auto;
+	font-size:12px;
+	margin:0px 5px 0px 2px;
+}
+.frmForm fieldset .divFormCheckbox label input {
+	display:inline;
+	width:auto;
+	background-color:transparent;
+}
+
+/********** INPUT RADIO BUTTON **********/
+
+.frmForm fieldset .divFormRadio {
+	display:block;
+	margin-bottom:7px;
+	*margin-bottom:3px;
+}
+.frmForm fieldset .divFormRadio label {
+	display:inline;
+	width:auto;
+	font-size:12px;
+	margin:0px 5px 0px 2px;
+}
+.frmForm fieldset .divFormRadio label input {
+	display:inline;
+	width:auto;
+	background-color:transparent;
+}
+
+/********** INPUT FILE **********/
+
+.frmForm .pf_wrap_class {
+	position:relative;
+	display:block;
+	margin-top:3px;
+	*margin-top:4px;
+	float:none;
+	width:100%;
+	background-color:#F4F4F4;
+	height:22px;
+	overflow:hidden;
+}
+.frmForm .pf_wrap_class div {
+	display:block;
+	position:absolute;
+	top:7px;
+	left:8px;
+	height:10px;
+	width:10px;
+	background-image:url(/assets/CMS/images.png);
+	background-position:-61px -1px;
+}
+.frmForm .pf_ph_cont {
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:block;
+	font-size: 14px;
+	width:100%;
+}
+.frmForm .pf_ph_cont strong {
+	position:absolute;
+	top:0px;
+	right:0px;
+	z-index:11;
+}
+ 
+.frmForm .pf_ph_cont strong span {
+	background-color:#DDDDDD;
+	padding:2px 5px;
+	margin:1px;
+	z-index:12;
+	color:#666666;
+}
+.frmForm .pf_ph {
+	position:absolute;
+	top:3px;
+	left:5px;
+	right:5px;
+	display:block;
+	padding-left:18px;
+	font-size:13px;
+	font-weight:bold;
+	color:#999999;
+	white-space:nowrap;
+	overflow:hidden;
+	z-index:10;
+}
+
+.uploadifyQueueItem {
+	font: 11px Verdana, Geneva, sans-serif;
+	background-color:#FFFFFF;
+	margin-top: 5px;
+	padding: 10px;
+	display:block;
+	border:1px solid #DDDDDD;
+}
+.uploadifyError {
+	border: 2px solid #FBCBBC !important;
+	background-color: #FDE5DD !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.frmForm fieldset .uploadifyQueueItem span {
+	float:left;
+	font-size:11px;
+}
+.uploadifyProgress {
+	background-color: #FFFFFF;
+	border-top: 1px solid #808080;
+	border-left: 1px solid #808080;
+	border-right: 1px solid #C5C5C5;
+	border-bottom: 1px solid #C5C5C5;
+	margin-top: 18px;
+	width: 100%;
+}
+.uploadifyProgressBar {
+	background-color: #BB0000;
+	width: 1px;
+	height: 3px;
+}
+.divUploadFile {
+	position:relative;
+	font: 11px Verdana, Geneva, sans-serif;
+	background-color:#FFFFFF;
+	margin-top: 5px;
+	padding: 10px;
+	display:block;
+	border:1px solid #DDDDDD;
+}
+.lnkUploadFileView {
+	cursor:pointer;
+	font-weight:normal;
+}
+.lnkUploadFileDelete {
+	display:block;
+	position:absolute;
+	top:10px;
+	right:10px;
+	background-image:url(/assets/CMS/images.png);
+	background-position:-81px -205px;
+	height:16px;
+	width:16px;
+	cursor:pointer;
+}
+
+/********** TABS **********/
+
+.divFormTab {
+	display:block;
+	position:relative;
+	margin:0px 35px;
+	min-height:330px;
+}
+.divFormTab fieldset {
+	margin:15px 20px 0px 15px;
+	width:360px;
+}
+
+/********** GENERIC **********/
+
+.lnkAddNew {
+	display:block;
+	position:relative;
+	background-color:#EEEEEE;
+	float:right;
+	text-decoration:none;
+	padding:3px 17px 3px 5px;
+	margin-right:9px;
+}
+.lnkAddNew:hover {
+	background-color:#DDDDDD;
+}
+.lnkAddNew ins {
+	display:block;
+	position:absolute;
+	right:-9px;
+	top:-1px;
+	background-image:url(/assets/CMS/images.png);
+	background-position:-1px -231px;
+	background-repeat:no-repeat;
+	height:24px;
+	width:24px;
+}
