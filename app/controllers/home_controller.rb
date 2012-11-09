@@ -18,12 +18,12 @@ class HomeController < ApplicationController
   end
 
   def add_item(code)
-    Nestful.post "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => code, :quantity => 1}
+    Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => code, :quantity => 1}
     redirect_to :back
   end
 
   def sub_item(code)
-    Nestful.post "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => code, :quantity => -1}
+    Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => code, :quantity => -1}
     redirect_to :back
   end
 
