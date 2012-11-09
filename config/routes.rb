@@ -5,6 +5,9 @@ PortalMc437::Application.routes.draw do
   get "/" => "home#login"
   get "/index" => "home#index"
 
+  post "/index/add" => "home#add_item"
+  post "/index/sub" => "home#sub_item"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

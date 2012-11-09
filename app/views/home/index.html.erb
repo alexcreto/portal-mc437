@@ -12,7 +12,9 @@
 
   <%= "Produdo #{@prod1["product"]["code"]}" %><br/>
   <%= "Preço #{@prod1["product"]["price"]}" %><br/>
-  <%= "Estoque #{@prod1["product"]["quantity"]}" %><br/><br/><br/>
+  <%= "Estoque #{@prod1["product"]["quantity"]}" %><br/>
+  <%= link_to "Adicionar ao Estoque", index_add_path(@prod1["product"]["code"]) %><br/><br/><br/>
+  <%= link_to "Retirar um do Estoque", index_sub_path(@prod1["product"]["code"]) %><br/><br/><br/>
 
   <%= "Produdo #{@prod2["product"]["code"]}" %><br/>
   <%= "Preço #{@prod2["product"]["price"]}" %><br/>
