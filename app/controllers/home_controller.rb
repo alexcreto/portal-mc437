@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def index
-    Home.get_json
+    @rest = Home.get_json
   end
 
   def products
