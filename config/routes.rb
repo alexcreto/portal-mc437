@@ -4,6 +4,12 @@ PortalMc437::Application.routes.draw do
 
   get "/" => "home#login"
   get "/index" => "home#index"
+  get "/cart" => "home#cart"
+  get "/card" => "home#card"
+  get "/boleto" => "home#boleto"
+  get "/payment" => "home#payment"
+  get "/customer_support" => "home#customer_support"
+
 
   get "/index/add/:code" => "home#add_item"
   get "/index/sub/:code" => "home#sub_item"
