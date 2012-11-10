@@ -1,0 +1,39 @@
+<div class="wFormContainer">
+<h2>Atendimento ao cliente</h2><br/>
+<fieldset id="fsCadastro">
+<legend>Ticket de atendimento</legend>
+
+
+  <form accept-charset="UTF-8" action="/clients" class="new_client" id="new_client" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="awVPadHB2P5PYvo4ppd8memEBHWt5raePhC8BVTAw/M=" /></div>
+
+  
+  <div class="field">
+    <label for="atendimento_Tipo">Tipo de Chamada</label><br />
+    <select id="atendimento_tipo_id" name="atendimento[tipo_id]"><option value="1">Reclamacao</option>
+
+<option value="2">Sugestao</option>
+<option value="3">Duvida</option>
+<option value="4" selected="selected">Pedido</option></select>
+  </div>
+
+  
+
+  
+  <div class="field">
+    <label for="atendimento_texto">Texto</label><br />
+    <textarea cols="40" id="atendimento_texto" name="atendimento[texto]" rows="20">
+</textarea>
+
+
+
+
+
+
+
+  </div>
+  <div class="actions">
+    <input name="commit" type="submit" value="Criar ticket de atendimento" />
+  </div>
+
+
+</fieldset>
