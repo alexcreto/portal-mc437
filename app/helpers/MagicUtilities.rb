@@ -35,7 +35,9 @@ class Address
   def update_by_cep cep
     result = @client.request :g02_busca_por_cep , :body => [ :cep => cep ]
     
-    if result[:erro] == 0
+    pp result.to_hash[:g02_busca_por_cep]
+    
+    unless result.to_hash[:g02_busca_por_cep][:return].nil?
       
       @cep=cep
       @numero=result[:numero]
@@ -69,7 +71,7 @@ class Client
   #loga o usuário
   def login cpf, senha
     
-    if logger.login cpf, senha
+    if @logger.login cpf, senha
       @senha=senha
       @cpf=cpf
       
@@ -82,7 +84,7 @@ class Client
   
   #desloga o usuário
   def logout
-    if logger.log_off @cpf, @senha
+    if @logger.log_off @cpf, @senha
       return true
     end
     return false
@@ -90,12 +92,18 @@ class Client
   
   #atualiza cep numero e nome do cliente
   def update_basic_info
-    result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{@cpf}.json"
+    exists = Nestful.json_get "http://mc437.herokuapp.com/existe/#{@cpf}.json"
+    if exists["existe"] == 1
+      result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{@cpf}.json"
+    else
+      return false
+    end
+    
     
     if result != nil
-      @cep = result[:cep]
-      @numero = result[:numero]
-      @nome = result[:nome]
+      @cep = result["cep"]
+      @numero = result["numero"]
+      @nome = result["nome"]
       return true
     end
     
@@ -104,7 +112,7 @@ class Client
   
   #atualiza endereco
   def update_address
-    if @address.update_by_cep @cep, @numero
+    if @endereco.update_by_cep @cep
       return true
     end
     return false
