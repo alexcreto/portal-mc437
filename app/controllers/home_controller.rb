@@ -1,3 +1,5 @@
+require "app/helpers/MagicUtilities.rb"
+require "pp"
 class HomeController < ApplicationController
 
   def login
@@ -7,12 +9,17 @@ class HomeController < ApplicationController
   end
 
   def index
-    @prod1 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/1010.json"
-    @prod2 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/2222.json"
-    @prod3 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3030.json"
-    @prod4 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3034.json"
-    @prod5 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3234.json"
-    @prod6 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3333.json"
+    c=Client.new
+    pp c
+    c.login "12628161818","sindo"
+    
+    pp c
+    #@prod1 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/1010.json"
+    #@prod2 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/2222.json"
+    #@prod3 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3030.json"
+    #@prod4 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3034.json"
+    #@prod5 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3234.json"
+    #@prod6 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3333.json"
 
     #prod_info = Savon.client "http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl"
     #prod_info.wsdl.soap_actions

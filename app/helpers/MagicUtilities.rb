@@ -24,43 +24,44 @@ class SiteLogger
 end
 
 class Address
-  attr_writer :valid
-  attr_writer :cep, :uf, :cidade, :bairro, :tipo_lougradouro
-  attr_writer :lougradouro
+  attr_reader :valid
+  attr_reader :cep, :uf, :cidade, :bairro, :tipo_logradouro , :logradouro
   
   def initialize
     @client=Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
+    @valid=false
   end
   
   def update_by_cep cep
-    result = @client.request :g02_busca_por_cep , :body => [ :cep => cep ]
+    body = Hash.new
+    body[:cep] = cep
+    result = @client.request :g02_busca_por_cep , :body => body
     
-    pp result.to_hash[:g02_busca_por_cep]
-    
-    unless result.to_hash[:g02_busca_por_cep][:return].nil?
+    result=result.to_hash[:g02_busca_por_cep_response]
+
+    unless result.nil?
       
       @cep=cep
       @numero=result[:numero]
       @uf=result[:uf]
       @cidade=result[:cidade]
       @bairro=result[:bairro]
-      @tipo_logradouro=result[:tipo_logradouro]
-      @lougradouro=result[:lougradouro]
-
+      @tipo_logradouro=result[:tipo]
+      @logradouro=result[:logradouro]
+      @valid = true
+      
       return true
     end
     
+    @valid = false
     return false
   end
-  
-  def is_valid
-    return @valid
-  end
+
   
 end
 
 class Client
-  attr_writer :nome, :cpf, :senha, :endereco, :numero
+  attr_reader :nome, :cpf, :senha, :endereco, :numero
   attr_writer :logger
   
   def initialize
@@ -93,6 +94,7 @@ class Client
   #atualiza cep numero e nome do cliente
   def update_basic_info
     exists = Nestful.json_get "http://mc437.herokuapp.com/existe/#{@cpf}.json"
+    
     if exists["existe"] == 1
       result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{@cpf}.json"
     else
