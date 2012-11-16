@@ -13,7 +13,7 @@
         <div class="links">
             <%= link_to 'Edit', edit_item_path(item) %> |
             <%= link_to 'Destroy', item, :confirm => 'Are you sure?', :method => :delete %>
-	   <%= button_to "Add to Cart", :controller => :Cart, :action => :add, :id => item %>
+<%= button_to "Add to Cart", :controller => :cart, :action => :add, :method => :post, :id => item.id %>
         </div>
         <div class="price">
             <%= number_to_currency(item.price, :unit => "&pound;") %>

@@ -2,7 +2,6 @@ class CartController < ApplicationController
 
   def add
     id = params[:id]
-    
     cart = session[:cart] ||= {}
     cart[id] = (cart[id] || 0) + 1
         
@@ -13,7 +12,7 @@ class CartController < ApplicationController
     @cart = session[:cart] || {}
   end
   
-    def change
+  def change
     cart = session[:cart]
     id = params[:id];
     quantity = params[:quantity].to_i

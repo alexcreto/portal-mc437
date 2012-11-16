@@ -1,7 +1,13 @@
-require "app/helpers/MagicUtilities.rb"
+require "app/models/MagicUtilities.rb"
 require "pp"
-class HomeController < ApplicationController
 
+class HomeController < ApplicationController
+  attr_reader :client
+  
+  def initialize
+    client=Client.new
+  end
+  
   def login
     cpf = "00000000000"
     senha = "zerada"
@@ -9,21 +15,12 @@ class HomeController < ApplicationController
   end
 
   def index
-    c=Client.new
-    pp c
-    c.login "12628161818","sindo"
+    @produtos = Products.new.search nil, nil
     
-    pp c
-    #@prod1 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/1010.json"
-    #@prod2 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/2222.json"
-    #@prod3 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3030.json"
-    #@prod4 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3034.json"
-    #@prod5 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3234.json"
-    #@prod6 = Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/3333.json"
-
-    #prod_info = Savon.client "http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl"
-    #prod_info.wsdl.soap_actions
-    #@info1 = prod_info.request :get_???, :body => { :codigo => "1010" }
+    respond_to do |format|
+      format.html
+      format.json{ render :json => @produtos }
+    end
   end
 
   def add_item

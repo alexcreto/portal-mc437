@@ -10,3 +10,21 @@
 
   <h2>Lista de Produtos</h2><br/><br/>
 
+  <table>
+  <tr>
+      <td></td>
+      <td class="legend">Categoria</td>
+      <td class="legend">Produto</td>
+      <td class="legend">Descricao</td>
+      <td class="legend">Preco</td>
+  </tr>
+  <% for produto in @produtos %>
+  <tr>
+    <td><%=image_tag(produto.imagem, :size => "100x100") %></td>
+    <td><%=produto.categoria%></td>
+    <td><%=produto.nome%></td>
+    <td><%=produto.descricao%></td>
+    <td><%=produto.preco%></td>
+  </tr>
+  <%end%>
+  </table>

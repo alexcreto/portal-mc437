@@ -23,9 +23,8 @@ class SiteLogger
   
 end
 
-class Address
-  attr_reader :valid
-  attr_reader :cep, :uf, :cidade, :bairro, :tipo_logradouro , :logradouro
+class Address 
+  attr_reader :cep, :uf, :cidade, :bairro, :tipo_logradouro , :logradouro, :valid
   
   def initialize
     @client=Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
@@ -61,8 +60,7 @@ class Address
 end
 
 class Client
-  attr_reader :nome, :cpf, :senha, :endereco, :numero
-  attr_writer :logger
+  attr_reader :nome, :cpf, :senha, :endereco, :numero, :logger
   
   def initialize
     @logger=SiteLogger.new
@@ -139,12 +137,10 @@ end
 
 #Basicamente serve pra procurar produtos com método search
 class Products
-  attr_writer :client_desc
   attr_reader :client_desc
   
   def initialize
     @client_desc=Savon.client("http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl")
-    
   end
   
   #Pesquisa por produtos
@@ -169,11 +165,10 @@ class Products
       
       data.each do |p|
         r= Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/#{p[:codigo]}.json"
-        prods << Product.new(p[:codigo],p[:categoria],p[:nome],r["product"]["price"],p[:descricao],r["product"]["quantity"]) 
+        prods << Product.new(p[:codigo],p[:categoria],p[:nome],r["product"]["price"],p[:descricao],r["product"]["quantity"],p[:imagem]) 
       end
     end
    
-    
     return prods
   end
 
@@ -181,16 +176,17 @@ end
 
 
 class Product
-  attr_writer  :codigo, :categoria, :nome, :preco, :descricao, :quantidade
+  attr_reader  :codigo, :categoria, :nome, :preco, :descricao, :quantidade, :imagem
 
   ##depois se precisar colocamos mais atributos, esses são os mais importantes
-  def initialize codigo, categoria, nome, preco, descricao, quantidade
+  def initialize codigo, categoria, nome, preco, descricao, quantidade, imagem
     
     @categoria = categoria
     @nome = nome
     @preco = preco
     @descricao = descricao
     @quantidade = quantidade
+    @imagem = imagem
 
   end
   

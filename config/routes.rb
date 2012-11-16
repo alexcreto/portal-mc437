@@ -15,6 +15,8 @@ PortalMc437::Application.routes.draw do
   get "/customer_support" => "home#customer_support"
 
 
+  
+  post "/cart/add/:id" => "cart#add"
   get "/index/add/:code" => "home#add_item"
   get "/index/sub/:code" => "home#sub_item"
 
