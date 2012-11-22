@@ -1,21 +1,31 @@
 require "app/models/MagicUtilities.rb"
 require "pp"
 
+
 class HomeController < ApplicationController
+
   attr_reader :client
   
   def initialize
-    client=Client.new
+    @client=Client.new
   end
   
   def login
-    cpf = "00000000000"
-    senha = "zerada"
-    Nestful.json_get "http://staff03.lab.ic.unicamp.br:8888/authentications/loga.json?login=#{cpf}&senha=#{senha}"
+    @client.login(params[:cpf], params[:senha])
+    if @client.logger.logged
+      redirect_to "/index" and return false
+    else
+      flash[:notice] = "CPF ou senha inválida"
+    end
   end
 
   def index
-    @produtos = Products.new.search nil, nil
+    if params[:name].blank?
+      @produtos = Products.new.search nil, nil
+    else
+      @produtos = Products.new.search nil, params[:name]
+    end
+    
     
     respond_to do |format|
       format.html

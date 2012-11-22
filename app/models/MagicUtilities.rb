@@ -7,7 +7,7 @@ class SiteLogger
   
   def login cpf, senha
     result=Nestful.json_get "http://staff03.lab.ic.unicamp.br:8888/authentications/loga.json?login=#{cpf}&senha=#{senha}"
-    @logged= result[:response] != 0
+    @logged= result["response"] == 0
     return @logged
   end
   
@@ -17,7 +17,7 @@ class SiteLogger
   
   def log_off cpf, senha
     result=Nestful.json_get "http://staff03.lab.ic.unicamp.br:8888/authentications/desloga.json?login=#{cpf}&senha=#{senha}"
-    @logged= result[:response] == 0 || @logged
+    @logged= result["response"] == 0 || @logged
     return @logged
   end
   
@@ -187,6 +187,7 @@ class Product
     @descricao = descricao
     @quantidade = quantidade
     @imagem = imagem
+    @codigo = codigo
 
   end
   

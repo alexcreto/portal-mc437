@@ -1,7 +1,7 @@
-<h1>Your Cart</h1>
+<h1>Carrinho</h1>
 
 <% if @cart.empty? %>
-    <p>Your Cart is empty.</p>
+    <p>Seu carrinho está vazio.</p>
 <% end %>
 
 <% total = 0 %>
@@ -9,23 +9,28 @@
 <table class="cart">
     <tr>
         <td class="legend"></td>
-        <td class="legend">Item</td>
-        <td class="legend">Price</td>
-        <td class="legend">Qty</td>
-        <td class="legend">Total</td>
+        <td align="center" class="legend">Item</td>
+        <td align="center" class="legend">Price</td>
+        <td align="center" class="legend">Qty</td>
+        <td align="center" class="legend">Total</td>
     </tr>
 	
-<% @cart.each do | id, quantity | %>
-    <% item = Item.find_by_id(id) %>
-    <tr>
-        <td class="title"><%= link_to item.title, item %></td>
-        <td class="price"><%= number_to_currency(item.price) %></td>
-        <td class="quantity"><%= quantity %><br /></td>
-        <td class="price">
-        <%= number_to_currency(quantity * item.price, :unit => "£") %>
-    </td>
-    </tr>
-    <% total += quantity * item.price %>
+<% @cart.each do | id, quantidade | %>
+    <% itens = Products.new.search nil, nil %>
+    <% itens.each do | item | %>
+    <% if item.codigo == id %>
+        <tr>
+            <td><%=image_tag(item.imagem, :size => "100x100") %></td>
+            <td class="title"><%= item.nome %></td>
+            <td align="center" class="price"><%= number_to_currency(item.preco) %></td>
+            <td align="center" class="quantity"><%= quantidade %><br /></td>
+            <td align="center" class="price">
+            <%= number_to_currency(quantidade * item.preco, :unit => "R$") %>
+        </td>
+        </tr>
+    <% total += quantidade * item.preco %>
+    <%end%>
+    <% end %>
 <% end %>
 
     <tr>
@@ -33,7 +38,7 @@
             <div class="total">Total:</div>
         </td>
         <td>
-            <div class="price"><%= number_to_currency(total, :unit => "£") %></div>
+            <div class="price"><%= number_to_currency(total, :unit => "R$") %></div>
         </td>
     </tr>
 </table>

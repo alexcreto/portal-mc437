@@ -6,8 +6,10 @@ PortalMc437::Application.routes.draw do
 
   #root :to => "home#index"
 
+  post "/" => "home#login"
   get "/" => "home#login"
   get "/index" => "home#index"
+  post "/index" => "home#index"
   get "/cart" => "cart#index"
   get "/card" => "home#card"
   get "/boleto" => "home#boleto"
@@ -17,6 +19,7 @@ PortalMc437::Application.routes.draw do
 
   
   post "/cart/add/:id" => "cart#add"
+  get "/cart/add/:id" => "cart#add"
   get "/index/add/:code" => "home#add_item"
   get "/index/sub/:code" => "home#sub_item"
 

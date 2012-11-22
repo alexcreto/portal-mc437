@@ -1,22 +1,37 @@
 
-  <h1>Produtos</h1>
+<h1>Produtos</h1>
 
 
-  <h2>Busca</h2><br/>
-  Campo_de_Busca<br/><br/><br/>
+<h2>Busca</h2><br/>
+<%= form_tag('/index') do %>
 
-  <h2>Categoria</h2><br/>
-  Area_de_Categorias<br/><br/><br/>
+  <div>
+    <%= label_tag 'Nome' %><br />
+    <%= text_field_tag :name %>
+  </div>
 
-  <h2>Lista de Produtos</h2><br/><br/>
+  <div>
+    <%= label_tag 'Categoria' %><br />
+    <%= text_field_tag :category %>
+  </div>
 
-  <table>
+  <div>
+    <%= submit_tag 'Buscar' %>
+  </div>
+<% end %>
+
+<br/><br/><br/>
+
+<h2>Lista de Produtos</h2><br/><br/>
+
+<table>
   <tr>
       <td></td>
       <td class="legend">Categoria</td>
       <td class="legend">Produto</td>
       <td class="legend">Descricao</td>
       <td class="legend">Preco</td>
+      <td class="legend">Adicionar ao Carrinho</td>
   </tr>
   <% for produto in @produtos %>
   <tr>
@@ -25,6 +40,7 @@
     <td><%=produto.nome%></td>
     <td><%=produto.descricao%></td>
     <td><%=produto.preco%></td>
+    <td><%= button_to "Add to Cart", "/cart/add/#{produto.codigo}", :method => :post, :id => produto.codigo %></td>
   </tr>
   <%end%>
-  </table>
+</table>

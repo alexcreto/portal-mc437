@@ -1,17 +1,18 @@
+<p id="notice"><%= notice %></p>
 
-  <%= form_tag('/') do %>
+<%= form_tag('/') do %>
 
-    <div>
-      <%= label_tag 'CPF' %><br />
-      <%= text_field_tag :cpf %>
-    </div>
+  <div>
+    <%= label_tag 'CPF' %><br />
+    <%= text_field_tag :cpf %>
+  </div>
 
-    <div>
-      <%= label_tag 'Senha' %><br />
-      <%= password_field_tag :pass %>
-    </div>
+  <div>
+    <%= label_tag 'Senha' %><br />
+    <%= password_field_tag :senha %>
+  </div>
 
-    <div>
-      <%= submit_tag 'Login' %>
-    </div>
-  <% end %>
+  <div>
+    <%= submit_tag 'Login' %>
+  </div>
+<% end %>
