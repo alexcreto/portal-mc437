@@ -3,7 +3,6 @@ require "pp"
 
 
 class HomeController < ApplicationController
-
   attr_reader :client
   
   def initialize
@@ -15,7 +14,9 @@ class HomeController < ApplicationController
     if @client.logger.logged
       redirect_to "/index" and return false
     else
-      flash[:notice] = "CPF ou senha inválida"
+      unless params[:cpf].blank? && params[:senha].blank?
+        flash.now[:notice] = "CPF ou senha inválida"
+      end
     end
   end
 

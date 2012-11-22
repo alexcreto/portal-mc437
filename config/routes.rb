@@ -20,6 +20,8 @@ PortalMc437::Application.routes.draw do
   
   post "/cart/add/:id" => "cart#add"
   get "/cart/add/:id" => "cart#add"
+  post "/cart/change/:id" => "cart#change"
+  get "/cart/change/:id" => "cart#change"
   get "/index/add/:code" => "home#add_item"
   get "/index/sub/:code" => "home#sub_item"
 
