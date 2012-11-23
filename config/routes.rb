@@ -16,7 +16,7 @@ PortalMc437::Application.routes.draw do
   get "/payment" => "home#payment"
   get "/customer_support" => "home#customer_support"
 
-
+  get "/success" => "home#success"
   
   post "/cart/add/:id" => "cart#add"
   get "/cart/add/:id" => "cart#add"

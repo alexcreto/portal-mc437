@@ -13,13 +13,13 @@
         <td class="legend"> </td>
         <td align="center" class="legend">Item</td>
         <td align="center" class="legend">Preço</td>
-        <td align="center" class="legend">Quantidade</td>
+        <td align="center" class="legend">Quantidade (Estoque)</td>
         <td align="center" class="legend">Nova Quant.</td>
         <td align="right" class="legend">Total</td>
     </tr>
-	
+    
+<% itens = Products.new.search nil, nil %>
 <% @cart.each do | id, quantidade | %>
-    <% itens = Products.new.search nil, nil %>
     <% itens.each do | item | %>
         <% if item.codigo == id %>
             <tr>

@@ -1,4 +1,4 @@
-require "app/models/MagicUtilities.rb"
+require "app/models/models.rb"
 require "pp"
 
 
@@ -52,6 +52,37 @@ class HomeController < ApplicationController
 
   def payment
     
+  end
+
+  def success
+    total = 0
+    cart = session[:cart] ||= {}
+    itens = Products.new.search nil, nil 
+    cart.each do | id, quantidade | 
+     
+      itens.each do | item | 
+        if item.codigo == id 
+          Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => id, :quantity => quantidade*-1}
+        
+
+        total += quantidade * item.preco 
+        end
+      end
+    end
+    cart = {}
+
+    banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
+    
+    body = Hash.new
+    body["cnpj_contrato_convenio"] = "44.867.477/0001-44"
+    body[:token] = "54d45bc31c9f63c37b0108e615cb9077"
+    body[:cliente] = @client.nome
+    body[:valor] = total
+
+    banco.request :emitir_boleto, :body => body
+  
+
+
   end
 
   def address
