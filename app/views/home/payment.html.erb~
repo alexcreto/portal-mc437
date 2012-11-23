@@ -37,14 +37,8 @@
 <div style="margin-left: 50px;">
 
 
-
-
-
-
-
-
-
-
+ <div class="total">Total:</div>
+ <div class="price"><%= number_to_currency(total, :unit => "R$") %></div>
 
 <div>
   <h2>Escolha a forma de pagamento</h2>
@@ -54,10 +48,6 @@
     <li><a href="/cartao"> CARTÃO </a></li>
   </ul>
 </div>
-
-
-
-
 
 
 
@@ -82,3 +72,6 @@
 
 </body>
 </html>
+
+
+
