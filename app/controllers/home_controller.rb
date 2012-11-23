@@ -12,6 +12,10 @@ class HomeController < ApplicationController
   def login
     @client.login(params[:cpf], params[:senha])
     if @client.logger.logged
+      session[:client] = Array.new
+      session[:client] << @client.nome
+      session[:client] << @client.cpf
+      pp session[:client]
       redirect_to "/index" and return false
     else
       unless params[:cpf].blank? && params[:senha].blank?
@@ -51,7 +55,9 @@ class HomeController < ApplicationController
   end
 
   def payment
-    
+    client = Savon.client "http://staff01.lab.ic.unicamp.br:8480/ModuloValidacaoCreditoWS/services/ValidacaoCreditoService?wsdl"
+    score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
+    @score = score.to_hash[:get_score_response][:return][:score]
   end
 
   def success
@@ -76,7 +82,7 @@ class HomeController < ApplicationController
     body = Hash.new
     body["cnpj_contrato_convenio"] = "44.867.477/0001-44"
     body[:token] = "54d45bc31c9f63c37b0108e615cb9077"
-    body[:cliente] = @client.nome
+    body[:cliente] = session[:client].first
     body[:valor] = total
 
     banco.request :emitir_boleto, :body => body

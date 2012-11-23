@@ -15,8 +15,8 @@ class SiteLogger
     return @logged
   end
   
-  def log_off cpf, senha
-    result=Nestful.json_get "http://staff03.lab.ic.unicamp.br:8888/authentications/desloga.json?login=#{cpf}&senha=#{senha}"
+  def log_off cpf
+    result=Nestful.json_get "http://staff03.lab.ic.unicamp.br:8888/authentications/desloga.json?login=#{cpf}&senha=sindos"
     @logged= result["response"] == 0 || @logged
     return @logged
   end
@@ -166,6 +166,7 @@ class Products
       data.each do |p|
         r= Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/#{p[:codigo]}.json"
         prods << Product.new(p[:codigo],p[:categoria],p[:nome],r["product"]["price"],p[:descricao],r["product"]["quantity"],p[:imagem]) 
+        break
       end
     end
    
