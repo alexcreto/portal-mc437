@@ -13,6 +13,13 @@ class CartController < ApplicationController
   end
   
   def change
+
+    r= Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/#{params[:id]}.json"
+    if params[:quantity].to_i > r["product"]["quantity"]
+      flash[:notice] = "Você pediu mais produtos do que existem em estoque"
+      redirect_to :action => :index and return false
+    end
+
     cart = session[:cart]
     id = params[:id];
     quantity = params[:quantity].to_i
