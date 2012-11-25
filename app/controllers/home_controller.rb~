@@ -107,8 +107,13 @@ class HomeController < ApplicationController
 
   def cartao
 	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-	valid = client.request :validateTransaction, :body => { :value => "100", :token => "1", :number => "344259359401285"}
-	@valid = valid.to_hash[:validate_transaction_response][:return][:valid]
+	valid = client.request :validateTransaction, :body => { :token => "1", :number => params[:numero], :value => params[:valor]}
+	@valid = valid.to_hash[:validate_transaction_response][:return]
+
+
+	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+	transaction = client.request :doTransaction, :body => { :token => "1", :value =>params[:valor] , :brand => params[:bandeira] , :number => params[:numero] , :name => "Augusto Matraga" , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
+	@transaction = transaction.to_hash
   end
 
 end

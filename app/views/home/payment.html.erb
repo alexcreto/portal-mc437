@@ -58,7 +58,6 @@
 
     <ul>
       <li><a href="/success"> BOLETO </a></li>
-      <li><a href="/cartao"> CARTAO </a></li>
     </ul>
 
     <% if @score == "O" %>
@@ -68,6 +67,41 @@
     <% end %>
 
   <% end %>
+</div>
+
+<div>
+<p>Pagamento com o Cartão de Crédito</p>
+<%= form_tag('/cartao') do %>
+
+  <div>
+    <%= label_tag 'Número do Cartão:' %><br />
+    <%= text_field_tag :numero %>
+  </div>
+
+  <div>
+    <%= label_tag 'Bandeira:' %><br />
+    <%= text_field_tag :bandeira %>
+  </div>
+
+  <div>
+    <%= label_tag 'Data de validade:' %><br />
+    <%= text_field_tag :data %>
+  </div>
+
+  <div>
+    <%= label_tag 'Código de Verificação:' %><br />
+    <%= text_field_tag :code %>
+  </div>
+
+  <div>
+    <%= label_tag 'Valor:' %><br />
+    <%= text_field_tag :valor %>
+  </div>
+
+  <div>
+    <%= submit_tag 'Pagar' %>
+  </div>
+<% end %>
 </div>
 
 
