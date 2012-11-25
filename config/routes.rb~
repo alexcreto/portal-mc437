@@ -6,17 +6,26 @@ PortalMc437::Application.routes.draw do
 
   #root :to => "home#index"
 
+  post "/" => "home#login"
   get "/" => "home#login"
   get "/index" => "home#index"
+  post "/index" => "home#index"
   get "/cart" => "cart#index"
   get "/card" => "home#card"
   get "/boleto" => "home#boleto"
   get "/payment" => "home#payment"
   get "/customer_support" => "home#customer_support"
 
-
+  get "/success" => "home#success"
+  
+  post "/cart/add/:id" => "cart#add"
+  get "/cart/add/:id" => "cart#add"
+  post "/cart/change/:id" => "cart#change"
+  get "/cart/change/:id" => "cart#change"
   get "/index/add/:code" => "home#add_item"
   get "/index/sub/:code" => "home#sub_item"
+
+
 
 
   # The priority is based upon order of creation:

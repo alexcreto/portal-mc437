@@ -39,73 +39,7 @@
 
 
 
-
-
-
-
-
-<h1>Produtos</h1>
-
-
-<h2>Busca</h2><br/>
-<%= form_tag('/index') do %>
-
-  <div>
-    <%= label_tag 'Nome' %><br />
-    <%= text_field_tag :name %>
-  </div>
-
-  <div>
-    <%= label_tag 'Categoria' %><br />
-    <%= text_field_tag :category %>
-  </div>
-
-  <div>
-    <%= submit_tag 'Buscar' %>
-  </div>
-<% end %>
-
-<br/><br/><br/>
-
-<h2>Lista de Produtos</h2><br/><br/>
-
-
-
-
-<% for produto in @produtos %>
-<table cellspacing="1" cellpadding="0" border="0"
- bgcolor="black" id="shell" height="250" width="900">
-   <tr>
-      <td colspan="2" bgcolor="white">
-  
-<table class="cart">
-
-
-  <tr>
-    <td><h2><%=produto.categoria%></h2></td>
-    <td><h2><%=produto.nome%></h2></td>
-  </tr>
-
-  <tr>
-    <td><%=image_tag(produto.imagem, :size => "160x160") %></td>
-    <td><%=produto.descricao%></td>
-  </tr>
-
-  <tr>
-    <td></td>
-    <td></td>
-    <td><h2>Preço: R$ <%=produto.preco%></h2></td>
-    <td><%= button_to "Comprar", "/cart/add/#{produto.codigo}", :method => :post, :id => produto.codigo %></td>
-  </tr>
-
-</table>
-
-      </td>
-   </tr>
-</table>
-<%end%>
-
-
+<%= valid %>
 
 
 
@@ -134,4 +68,3 @@
 
 </body>
 </html>
-

@@ -37,17 +37,41 @@
 <div style="margin-left: 50px;">
 
 
- <div class="total">Total:</div>
- <div class="price"><%= number_to_currency(total, :unit => "R$") %></div>
+
+
+
+
+
+
+
+
 
 <div>
   <h2>Escolha a forma de pagamento</h2>
 
-  <ul>
-    <li><a href="/boleto"> BOLETO </a></li>
-    <li><a href="/cartao"> CARTÃO </a></li>
-  </ul>
+  <% if @score == "X" then %>
+    <ul>
+      <li>Infelizmente você não está apto a comprar conosco ainda. Entre em contato com o Atendimento para mais informações.</li>
+    </ul>
+
+  <% else %>
+
+    <ul>
+      <li><a href="/success"> BOLETO </a></li>
+    </ul>
+
+    <% if @score == "O" %>
+      <ul>
+        <li><a href="/card"> Cartão </a></li>
+      </ul>
+    <% end %>
+
+  <% end %>
 </div>
+
+
+
+
 
 
 
@@ -72,6 +96,3 @@
 
 </body>
 </html>
-
-
-

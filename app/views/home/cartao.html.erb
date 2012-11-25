@@ -1,1 +1,70 @@
-<h1>Cartão</h1>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portal Mc437 - Grupo 01 - Clientes</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+<div id="wrapper_outter">
+  <div id="wrapper_inner">
+    <div id="wrapper">
+      <div id="container">
+        <div id="header">
+          <div id="header_left">
+            <div id="site_title" align = "left">
+              <h1> <img src="/assets/logo.png" alt=""/></h1>
+            </div>
+            <div id="menu">
+              <ul>
+
+                <li><a href="/index" class="current">Home</a></li>
+                <li><a href="/index" class="">Produtos</a></li>
+                <li><a href="/cart" class="">Meu Carrinho</a></li>
+                <li><a href="/customer_support" class="">Atendimento</a></li>
+
+              </ul>
+            </div>
+            <!-- end of menu -->
+          </div> 
+          <div class="cleaner"></div>
+        </div>
+        <!-- end of header -->
+<div style="margin-left: 50px;">
+
+
+
+
+<%= @valid %>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+        <div id="footer">
+          Copyright &copy; 2012 <a href="http://portal-mc437.herokuapp.com/">Componente Cliente - MC437</a> | Desenvolvido por Alexandre Creto, Fernando Lener, Gregori Inagaki, Murilo Travareli e Piergiorgio Lisanti.</div>
+        <!-- end of footer -->
+        <div class="cleaner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+</body>
+</html>
