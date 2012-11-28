@@ -28,7 +28,7 @@ class HomeController < ApplicationController
     if params[:name].blank?
       @produtos = Products.new.search nil, nil
     else
-      @produtos = Products.new.search nil, params[:name]
+      @produtos = Products.new.search params[:category], params[:name]
     end
     
     
@@ -40,11 +40,6 @@ class HomeController < ApplicationController
 
   def add_item
     Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => params[:code], :quantity => 1}
-    redirect_to :back
-  end
-
-  def sub_item
-    Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => params[:code], :quantity => -1}
     redirect_to :back
   end
 
@@ -86,8 +81,6 @@ class HomeController < ApplicationController
       itens.each do | item | 
         if item.codigo == id 
           Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => id, :quantity => quantidade*-1}
-        
-
         total += quantidade * item.preco
         end
       end
@@ -103,8 +96,6 @@ class HomeController < ApplicationController
     body[:valor] = total
 
     banco.request :emitir_boleto, :body => body
-  
-
 
   end
 
@@ -127,7 +118,8 @@ class HomeController < ApplicationController
 
   def frete
     produtos = Array.new
-    session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
+    prod = Array.new
+    session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
     cep = session[:cep]
     transportadora = params[:servico]
     client = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"

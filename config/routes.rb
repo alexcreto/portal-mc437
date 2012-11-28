@@ -4,15 +4,22 @@ PortalMc437::Application.routes.draw do
 
   resources :items, :cart, :user
 
-  #root :to => "home#index"
-
   post "/" => "home#login"
   get "/" => "home#login"
   get "/index" => "home#index"
   post "/index" => "home#index"
   get "/cart" => "cart#index"
+
+  get "/meuspedidos" => "home#meuspedidos"
+  post "/meuspedidos" => "home#meuspedidos"
+
+  post "/card" => "home#card"
   get "/card" => "home#card"
+
+  post "/boleto" => "home#boleto"
   get "/boleto" => "home#boleto"
+
+  post "/payment" => "home#payment"
   get "/payment" => "home#payment"
   get "/customer_support" => "home#customer_support"
 
@@ -23,7 +30,7 @@ PortalMc437::Application.routes.draw do
 
   post "/transporte" => "home#transporte"
   get "/transporte" => "home#transporte"
-  
+
   post "/frete" => "home#frete"
   get "/frete" => "home#frete"
 

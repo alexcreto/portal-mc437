@@ -57,7 +57,41 @@
 
   <div>
     <%= label_tag 'Categoria' %><br />
-    <%= text_field_tag :category %>
+    <%= select_tag(:category, options_for_select(
+                    [
+                      ["Acessório de Videogame", "Acessório de Videogame"],
+                      ["Acessórios para Celular", "Acessórios para Celular"],
+                      ["Alimentação", "Alimentação"],
+                      ["Aparelhos Celulares", "Aparelhos Celulares"],
+                      ["Beleza e Saúde", "Beleza e Saúde"],
+                      ["Blu-Ray Player", "Blu-Ray Player"],
+                      ["Bonecas", "Bonecas"],
+                      ["Brinquedos", "Brinquedos"],
+                      ["Câmeras Digitais", "Câmeras Digitais"],
+                      ["Carrinhos e Veículos", "Carrinhos e Veículos"],
+                      ["Celulares", "Celulares"],
+                      ["Console", "Console"],
+                      ["Console Portátil", "Console Portátil"],
+                      ["Cosméticos", "Cosméticos"],
+                      ["Desktops", "Desktops"],
+                      ["DVDs", "DVDs"],
+                      ["Eletrodomésticos", "Eletrodomésticos"],
+                      ["Eletrônicos", "Eletrônicos"],
+                      ["Filmes", "Filmes"],
+                      ["Fornos e Fogões", "Fornos e Fogões"],
+                      ["Informática", "Informática"],
+                      ["Jogo de Videogame", "Jogo de Videogame"],
+                      ["Lavanderia", "Lavanderia"],
+                      ["Música", "Música"],
+                      ["Netbooks", "Netbooks"],
+                      ["Notebooks", "Notebooks"],
+                      ["Perfumes", "Perfumes"],
+                      ["Portáteis", "Portáteis"],
+                      ["Refrigeradores", "Refrigeradores"],
+                      ["Séries de TV", "Séries de TV"],
+                      ["TVs", "TVs"],
+                      ["Videogames", "Videogames"]
+                    ]), :include_blank => true) %>
   </div>
 
   <div>

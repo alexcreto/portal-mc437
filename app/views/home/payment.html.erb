@@ -57,7 +57,7 @@
   <% else %>
 
     <ul>
-      <li><a href="/boleto"> BOLETO </a></li>
+      <%= button_to 'Pagar com Boleto', '/boleto' %><br/><br/>
     </ul>
 
     <% if @score == "O" %>
