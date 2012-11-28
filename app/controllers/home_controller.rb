@@ -58,9 +58,28 @@ class HomeController < ApplicationController
     client = Savon.client "http://staff01.lab.ic.unicamp.br:8480/ModuloValidacaoCreditoWS/services/ValidacaoCreditoService?wsdl"
     score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
     @score = score.to_hash[:get_score_response][:return][:score]
+    
+    case @score
+    when "A"
+      @score = "O"
+    when "B"
+      if session[:total] < 2000
+        @score = "O"
+      end
+    when "C"
+      if session[:total] < 1000
+        @score = "O"
+      end
+    when "D"
+      if session[:total] < 500
+        @score = "O"
+      end
+    end
+      
+
   end
 
-  def success
+  def boleto
     total = 0
     cart = session[:cart] ||= {}
     itens = Products.new.search nil, nil 
@@ -71,7 +90,7 @@ class HomeController < ApplicationController
           Nestful.put "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/quantity.json", :format => :json, :params => {:code => id, :quantity => quantidade*-1}
         
 
-        total += quantidade * item.preco 
+        total += quantidade * item.preco
         end
       end
     end
@@ -103,6 +122,17 @@ class HomeController < ApplicationController
 
   def customer_support
     
+  end
+
+  def cartao
+	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+	valid = client.request :validateTransaction, :body => { :token => "1", :number => params[:numero], :value => params[:valor]}
+	@valid = valid.to_hash[:validate_transaction_response][:return]
+
+
+	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+	transaction = client.request :doTransaction, :body => { :token => "1", :value =>params[:valor] , :brand => params[:bandeira] , :number => params[:numero] , :name => "Augusto Matraga" , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
+	@transaction = transaction.to_hash
   end
 
 end

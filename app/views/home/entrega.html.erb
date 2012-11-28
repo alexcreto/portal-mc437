@@ -47,61 +47,9 @@
 
 
 <div>
-  <h2>Escolha a forma de pagamento</h2>
+  <h2>Escolha a forma de envio</h2>
 
-  <% if @score == "X" then %>
-    <ul>
-      <li>Infelizmente você não está apto a comprar conosco ainda. Entre em contato com o Atendimento para mais informações.</li>
-    </ul>
-
-  <% else %>
-
-    <ul>
-      <li><a href="/boleto"> BOLETO </a></li>
-    </ul>
-
-    <% if @score == "O" %>
-      <ul>
-        <li><a href="/card"> CARTÃO </a></li>
-      </ul>
-    <% end %>
-
-  <% end %>
-</div>
-
-<div>
-<p>Pagamento com o Cartão de Crédito</p>
-<%= form_tag('/cartao') do %>
-
-  <div>
-    <%= label_tag 'Número do Cartão:' %><br />
-    <%= text_field_tag :numero %>
-  </div>
-
-  <div>
-    <%= label_tag 'Bandeira:' %><br />
-    <%= text_field_tag :bandeira %>
-  </div>
-
-  <div>
-    <%= label_tag 'Data de validade:' %><br />
-    <%= text_field_tag :data %>
-  </div>
-
-  <div>
-    <%= label_tag 'Código de Verificação:' %><br />
-    <%= text_field_tag :code %>
-  </div>
-
-  <div>
-    <%= label_tag 'Valor:' %><br />
-    <%= text_field_tag :valor %>
-  </div>
-
-  <div>
-    <%= submit_tag 'Pagar' %>
-  </div>
-<% end %>
+  
 </div>
 
 
