@@ -47,64 +47,51 @@
 
 
 <div>
-  <h2>Escolha a forma de pagamento</h2>
+  <h2>Escolha a forma de envio</h2>
 
-  <% if @score == "X" then %>
-    <ul>
-      <li>Infelizmente você não está apto a comprar conosco ainda. Entre em contato com o Atendimento para mais informações.</li>
-    </ul>
+  <br/><br/>
 
-  <% else %>
+  <h3>Gostaria de receber no seguinte endereço?</h3><br/>
+  <%= "#{@address[:g02_busca_por_cep_response][:tipo]} #{@address[:g02_busca_por_cep_response][:logradouro]}" %><br/>
+  Número: <%= @numero %><br/>
+  Bairro: <%= @address[:g02_busca_por_cep_response][:bairro] %><br/>
+  Cidade: <%= "#{@address[:g02_busca_por_cep_response][:cidade]} - #{@address[:g02_busca_por_cep_response][:uf]}" %>
 
-    <ul>
-      <li><a href="/success"> BOLETO </a></li>
-      <li><a href="/cartao"> CARTAO </a></li>
-    </ul>
 
-    <% if @score == "O" %>
-      <ul>
-        <li><a href="/card"> Cartão </a></li>
-      </ul>
-    <% end %>
+  <br/><br/>
 
-  <% end %>
-</div>
+  <%= button_to 'Sim, prosseguir para a logística', "/transporte" %>
 
-<div>
-<%= form_tag('/cartao') do %>
+  <br/>
+
+
+  <h3>Ou gostaria de escolher outro endereço?</h3><br/>
+
+  <%= form_tag('/entregaalt') do %>
 
   <div>
-    <%= label_tag 'Número do Cartão:' %><br />
-    <%= text_field_tag :numero %>
+    <%= label_tag 'CEP' %><br />
+    <%= text_field_tag :cep %>
   </div>
 
   <div>
-    <%= label_tag 'Bandeira:' %><br />
-    <%= text_field_tag :bandeira %>
+    <%= label_tag 'Número' %><br />
+    <%= text_field_tag :number %>
   </div>
 
   <div>
-    <%= label_tag 'Data de validade:' %><br />
-    <%= text_field_tag :data %>
-  </div>
-
-  <div>
-    <%= label_tag 'Código de Verificação:' %><br />
-    <%= text_field_tag :code %>
-  </div>
-
-  <div>
-    <%= label_tag 'Valor:' %><br />
-    <%= text_field_tag :valor %>
-  </div>
-
-  <div>
-    <%= submit_tag 'Pagar' %>
+    <%= submit_tag 'Buscar' %>
   </div>
 <% end %>
+
 </div>
 
+  <br/>
 
+  <%= button_to 'Gostaria de usar meu endereço cadastrado', "/entrega" %>
+
+
+  <br/><br/>
 
 
 

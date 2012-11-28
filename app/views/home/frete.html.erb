@@ -39,7 +39,6 @@
 
 
 
-<%= @valid %>
 
 
 
@@ -47,10 +46,19 @@
 
 
 
+<div>
+  <h2>Escolha a forma de envio</h2>
 
+  <br/><br/>
+
+  <h3>A entrega custará <%= @frete.last %> reais e levará <%= @frete.first %> dias para chegar.</h3><br/>
+  
+  <%= button_to :back, 'Gostaria de mudar o serviço' %> <br/>
+  <%= button_to '/payment', 'Gostaria de ir ao pagamento' %>
 
 </div>
 
+  <br/><br/>
 
 
         <div id="footer">

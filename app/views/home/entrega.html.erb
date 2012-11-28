@@ -47,12 +47,46 @@
 
 
 <div>
-  <h2>Escolha a forma de envio</h2>
+  <h2>Escolha o endereço</h2>
 
-  
+  <br/><br/>
+
+  <h3>Gostaria de receber no seguinte endereço?</h3><br/>
+  <%= "#{@address[:g02_busca_por_cep_response][:tipo]} #{@address[:g02_busca_por_cep_response][:logradouro]}" %><br/>
+  Número: <%= @numero %><br/>
+  Bairro: <%= @address[:g02_busca_por_cep_response][:bairro] %><br/>
+  Cidade: <%= "#{@address[:g02_busca_por_cep_response][:cidade]} - #{@address[:g02_busca_por_cep_response][:uf]}" %>
+
+
+  <br/><br/>
+
+  <%= button_to 'Sim, prosseguir para a logística', "/transporte" %>
+  <br/><br/>
+
+
+  <h3>Ou gostaria de escolher outro endereço?</h3><br/>
+
+  <%= form_tag('/entregaalt') do %>
+
+  <div>
+    <%= label_tag 'CEP' %><br />
+    <%= text_field_tag :cep %>
+  </div>
+
+  <div>
+    <%= label_tag 'Número' %><br />
+    <%= text_field_tag :number %>
+  </div>
+
+  <div>
+    <%= submit_tag 'Buscar' %>
+  </div>
+<% end %>
+
 </div>
 
 
+  <br/><br/>
 
 
 

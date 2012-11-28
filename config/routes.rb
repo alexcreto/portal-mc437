@@ -16,7 +16,16 @@ PortalMc437::Application.routes.draw do
   get "/payment" => "home#payment"
   get "/customer_support" => "home#customer_support"
 
+  post "/entrega" => "home#entrega"
   get "/entrega" => "home#entrega"
+  post "/entregaalt" => "home#entregaalt"
+  get "/entregaalt" => "home#entregaalt"
+
+  post "/transporte" => "home#transporte"
+  get "/transporte" => "home#transporte"
+  
+  post "/frete" => "home#frete"
+  get "/frete" => "home#frete"
 
   get "/cartao" => "home#cartao"
   post "/cartao" => "home#cartao"

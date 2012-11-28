@@ -75,8 +75,6 @@ class HomeController < ApplicationController
         @score = "O"
       end
     end
-      
-
   end
 
   def boleto
@@ -110,10 +108,35 @@ class HomeController < ApplicationController
 
   end
 
-  def address
-    cep = params[:cep]
+  def entrega
+    result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{session[:client].last}.json"
+    session[:cep] = result["cep"]
     client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
-    @address = client.request :g02_busca_por_cep, :body => { :cep => "#{cep}"}
+    address = client.request :g02_busca_por_cep, :body => { :cep => "#{result["cep"]}"}
+    @address = address.to_hash
+    @numero = result["numero"]
+  end
+
+  def entregaalt
+    session[:cep] = params[:cep]
+    client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
+    address = client.request :g02_busca_por_cep, :body => { :cep => params[:cep] }
+    @address = address.to_hash
+    @numero = params[:number]
+  end
+
+  def frete
+    produtos = Array.new
+    session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
+    cep = session[:cep]
+    transportadora = params[:servico]
+    client = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
+    trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 05055010, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
+    @frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]
+  end
+
+  def transporte
+    
   end
   
   def cart
@@ -125,14 +148,14 @@ class HomeController < ApplicationController
   end
 
   def cartao
-	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-	valid = client.request :validateTransaction, :body => { :token => "1", :number => params[:numero], :value => params[:valor]}
-	@valid = valid.to_hash[:validate_transaction_response][:return]
+  client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+  valid = client.request :validateTransaction, :body => { :token => "1", :number => params[:numero], :value => params[:valor]}
+  @valid = valid.to_hash[:validate_transaction_response][:return]
 
 
-	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-	transaction = client.request :doTransaction, :body => { :token => "1", :value =>params[:valor] , :brand => params[:bandeira] , :number => params[:numero] , :name => "Augusto Matraga" , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
-	@transaction = transaction.to_hash
+  client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+  transaction = client.request :doTransaction, :body => { :token => "1", :value =>params[:valor] , :brand => params[:bandeira] , :number => params[:numero] , :name => "Augusto Matraga" , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
+  @transaction = transaction.to_hash
   end
 
 end
