@@ -54,6 +54,8 @@ class HomeController < ApplicationController
     score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
     @score = score.to_hash[:get_score_response][:return][:score]
     
+    @precofinal = session[:total]
+
     case @score
     when "A"
       @score = "O"
@@ -140,14 +142,11 @@ class HomeController < ApplicationController
   end
 
   def cartao
-  client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-  valid = client.request :validateTransaction, :body => { :token => "1", :number => params[:numero], :value => params[:valor]}
-  @valid = valid.to_hash[:validate_transaction_response][:return]
 
+  	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
+  	transaction = client.request :doTransaction, :body => { :token => 1, :value => session[:total] , :brand => params[:bandeira] , :number => params[:numero] , :name => session[:client].first , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
+  	@transaction = transaction.to_hash
 
-  client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-  transaction = client.request :doTransaction, :body => { :token => "1", :value =>params[:valor] , :brand => params[:bandeira] , :number => params[:numero] , :name => "Augusto Matraga" , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
-  @transaction = transaction.to_hash
   end
 
 end

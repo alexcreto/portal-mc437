@@ -45,8 +45,8 @@
 
 
 
-
 <div>
+  <h2>Valor da Compra: R$ <%= @precofinal %></h2><br/>
   <h2>Escolha a forma de pagamento</h2>
 
   <% if @score == "X" then %>
@@ -61,15 +61,7 @@
     </ul>
 
     <% if @score == "O" %>
-      <ul>
-        <li><a href="/card"> CARTÃO </a></li>
-      </ul>
-    <% end %>
-
-  <% end %>
-</div>
-
-<div>
+      <div>
 <p>Pagamento com o Cartão de Crédito</p>
 <%= form_tag('/cartao') do %>
 
@@ -94,15 +86,15 @@
   </div>
 
   <div>
-    <%= label_tag 'Valor:' %><br />
-    <%= text_field_tag :valor %>
-  </div>
-
-  <div>
     <%= submit_tag 'Pagar' %>
   </div>
 <% end %>
 </div>
+    <% end %>
+
+  <% end %>
+</div>
+
 
 
 

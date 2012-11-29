@@ -1,39 +1,79 @@
-<div class="wFormContainer">
-<h2>Atendimento ao cliente</h2><br/>
-<fieldset id="fsCadastro">
-<legend>Ticket de atendimento</legend>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portal Mc437 - Grupo 01 - Clientes</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
 
 
-  <form accept-charset="UTF-8" action="/clients" class="new_client" id="new_client" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="awVPadHB2P5PYvo4ppd8memEBHWt5raePhC8BVTAw/M=" /></div>
+<div id="wrapper_outter">
+  <div id="wrapper_inner">
+    <div id="wrapper">
+      <div id="container">
+        <div id="header">
+          <div id="header_left">
+            <div id="site_title" align = "left">
+              <h1> <img src="/assets/logo.png" alt=""/></h1>
+            </div>
+            <div id="menu">
+              <ul>
 
-  
-  <div class="field">
-    <label for="atendimento_Tipo">Tipo de Chamada</label><br />
-    <select id="atendimento_tipo_id" name="atendimento[tipo_id]"><option value="1">Reclamacao</option>
+                <li><a href="/index" class="current">Home</a></li>
+                <li><a href="/index" class="">Produtos</a></li>
+                <li><a href="/cart" class="">Meu Carrinho</a></li>
+                <li><a href="/customer_support" class="">Atendimento</a></li>
 
-<option value="2">Sugestao</option>
-<option value="3">Duvida</option>
-<option value="4" selected="selected">Pedido</option></select>
+              </ul>
+            </div>
+            <!-- end of menu -->
+          </div> 
+          <div class="cleaner"></div>
+        </div>
+        <!-- end of header -->
+<div style="margin-left: 50px;">
+
+
+
+<div>
+<h2>Atendimento</h2>
+
+<p>O que deseja fazer?</p>
+
+<ul>
+<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></li>
+<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></li>
+<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></li>
+<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+        <div id="footer">
+          Copyright &copy; 2012 <a href="http://portal-mc437.herokuapp.com/">Componente Cliente - MC437</a> | Desenvolvido por Alexandre Creto, Fernando Lener, Gregori Inagaki, Murilo Travareli e Piergiorgio Lisanti.</div>
+        <!-- end of footer -->
+        <div class="cleaner"></div>
+      </div>
+    </div>
   </div>
-
-  
-
-  
-  <div class="field">
-    <label for="atendimento_texto">Texto</label><br />
-    <textarea cols="40" id="atendimento_texto" name="atendimento[texto]" rows="20">
-</textarea>
+</div>
 
 
 
 
 
-
-
-  </div>
-  <div class="actions">
-    <input name="commit" type="submit" value="Criar ticket de atendimento" />
-  </div>
-
-
-</fieldset>
+</body>
+</html>
