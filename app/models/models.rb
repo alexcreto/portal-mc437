@@ -171,6 +171,15 @@ class Products
 
     return prods
   end
+  
+  def getByCod cod
+    body = Hash.new
+    body[:codigo]=cod
+    result_desc = @client_desc.request :GetProdutoByCodigo, :body => body
+    p = result_desc.to_hash[:get_produto_by_codigo_response][:return]
+    r= Nestful.json_get "http://g1:g1@mc437-g8-estoque-v2.webbyapp.com/products/currentInfo/#{p[:codigo]}.json"
+    return Product.new(p[:codigo],p[:categoria],p[:nome],r["product"]["price"],p[:descricao],r["product"]["quantity"],p[:imagem])
+  end
 
 end
 
