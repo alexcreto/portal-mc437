@@ -50,8 +50,8 @@
     <%= link_to 'Comprar mais produtos', "/index" %>
 </p>
 
-<br/><br/><br/>
+<br/><br/><br/><% unless @cart.empty? %>
 <p>
     <%= link_to 'Finalizar Compra', "/entrega" %>
-</p>
+</p><% end %>
 <br/><br/><br/>

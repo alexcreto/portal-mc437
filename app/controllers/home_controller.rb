@@ -10,6 +10,8 @@ class HomeController < ApplicationController
   end
   
   def login
+    #reset_session
+    #pp session
     @client.login(params[:cpf], params[:senha])
     if @client.logger.logged
       session[:client] = Array.new
@@ -25,7 +27,7 @@ class HomeController < ApplicationController
   end
 
   def index
-    if params[:name].blank?
+    if params[:name].blank? && params[:category].blank?
       @produtos = Products.new.search nil, nil
     else
       @produtos = Products.new.search params[:category], params[:name]
@@ -103,7 +105,7 @@ class HomeController < ApplicationController
         end
       end
     end
-    session[:cart] = {}
+    session.delete :cart
 
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
@@ -137,6 +139,7 @@ class HomeController < ApplicationController
   def frete
     produtos = Array.new
     session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
+    pp produtos
     cep = session[:cep]
     transportadora = params[:servico]
     session[:trans] = transportadora
