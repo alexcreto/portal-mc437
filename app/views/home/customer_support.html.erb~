@@ -38,12 +38,18 @@
 
 
 
-<%= @transaction %>
-<% pp @transaction %>
-<br/>
-<br/>
-<%= @BODY %>
+<div>
+<h2>Atendimento</h2>
 
+<p>O que deseja fazer?</p>
+
+<li>
+<ul><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></ul>
+<ul><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></ul>
+<ul><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></ul>
+<ul><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></ul>
+</li>
+</div>
 
 
 
