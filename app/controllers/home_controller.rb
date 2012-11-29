@@ -73,6 +73,22 @@ class HomeController < ApplicationController
   end
 
   def boleto
+    produtos = Array.new
+    prod = Array.new
+    session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
+
+    post_body = Hash.new
+    post_body[:id_portal] = 1
+    post_body[:cep_remetente] = 05055010
+    post_body[:cep_destinatario] = session[:cep]
+    post_body[:id_transportadora] = session[:trans]
+    post_body[:produtos] = produtos
+
+    post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
+    cod_post = post.request :cadastrar_entrega, :body => post_body
+
+    Pedido.create(:cpf => session[:client].last, :status => 0, :pedidos => produtos, :entrega => "Aguardando Coleta", :codigo => cod_post)
+
     total = 0
     cart = session[:cart] ||= {}
     itens = Products.new.search nil, nil 
@@ -85,7 +101,7 @@ class HomeController < ApplicationController
         end
       end
     end
-    cart = {}
+    session[:cart] = {}
 
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
@@ -118,10 +134,10 @@ class HomeController < ApplicationController
 
   def frete
     produtos = Array.new
-    prod = Array.new
-    session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
+    session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
     cep = session[:cep]
     transportadora = params[:servico]
+    session[:trans] = transportadora
     client = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
     trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 05055010, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
     @frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]

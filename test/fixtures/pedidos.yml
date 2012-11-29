@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cpf: MyString
+  status: 1
+  pedidos: 1
+  entrega: MyString
+  codigo: 1
+
+two:
+  cpf: MyString
+  status: 1
+  pedidos: 1
+  entrega: MyString
+  codigo: 1
