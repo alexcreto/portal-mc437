@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,13 +21,9 @@
             <div id="menu">
               <ul>
 
-                <li><a href="/index" class="current">Home</a></li>
-                <li><a href="/index" class="">Produtos</a></li>
-                <li><a href="/cart" class="">Meu Carrinho</a></li>
-                <li><a href="/customer_support" class="">Atendimento</a></li>
-		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
-		<li><a href="/" class="">Logout</a></li>
 
+                <li><a href="/index" class="current">Home</a></li>
+                <li><a href="/customer_support" class="">Atendimento</a></li>
 
               </ul>
             </div>
@@ -45,59 +40,26 @@
 
 
 
+<p id="notice"><%= notice %></p>
 
-<%= @params[:id] %>
-
-<div>
-  <h2>Valor da Compra: R$ <%= @precofinal %></h2><br/>
-  <h2>Escolha a forma de pagamento</h2>
-
-  <% if @score == "X" then %>
-    <ul>
-      <li>Infelizmente você não está apto a comprar conosco ainda. Entre em contato com o Atendimento para mais informações.</li>
-    </ul>
-
-  <% else %>
-
-    <ul>
-      <%= button_to 'Pagar com Boleto', '/boleto' %><br/><br/>
-    </ul>
-
- <% end %>
-
-    <% if @score == "O" %>
-      <div>
-<p>Pagamento com o Cartão de Crédito</p>
-<%= form_tag('/cartao') do %>
+<%= form_tag('/') do %>
 
   <div>
-    <%= label_tag 'Número do Cartão:' %><br />
-    <%= text_field_tag :numero %>
+    <%= label_tag 'CPF' %><br />
+    <%= text_field_tag :cpf %>
   </div>
 
   <div>
-    <%= label_tag 'Bandeira:' %><br />
-    <%= text_field_tag :bandeira %>
+    <%= label_tag 'Senha' %><br />
+    <%= password_field_tag :senha %>
   </div>
 
   <div>
-    <%= label_tag 'Data de validade:' %><br />
-    <%= text_field_tag :data %>
-  </div>
-
-  <div>
-    <%= label_tag 'Código de Verificação:' %><br />
-    <%= text_field_tag :cod %>
-  </div>
-
-  <div>
-    <%= submit_tag 'Pagar' %>
+    <%= submit_tag 'Login' %>
   </div>
 <% end %>
-</div>
 
-  <% end %>
-</div>
+
 
 
 
@@ -121,3 +83,4 @@
 
 </body>
 </html>
+

@@ -58,8 +58,7 @@ class HomeController < ApplicationController
     score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
     @score = score.to_hash[:get_score_response][:return][:score]
     
-    @score = "b"
-    @precofinal = 10000
+    @precofinal = session[:total]
 
     case @score
     when "x"
@@ -214,6 +213,7 @@ class HomeController < ApplicationController
     transportadora = transportadora.to_i + 1 #meu frete@@
     transportadora = transportadora % 4 #meu frete@@
     @frete = [rand(3)+transportadora*2, frete] #meu frete@@
+
   end
 
   def transporte

@@ -26,6 +26,9 @@
                 <li><a href="/index" class="">Produtos</a></li>
                 <li><a href="/cart" class="">Meu Carrinho</a></li>
                 <li><a href="/customer_support" class="">Atendimento</a></li>
+		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
+		<li><a href="/" class="">Logout</a></li>
+
 
               </ul>
             </div>
@@ -52,6 +55,15 @@
   <br/><br/>
 
   <%= @pedidos.each do |pedido| %>
+
+<table cellspacing="1" cellpadding="0" border="0"
+ bgcolor="black" id="shell" height="80" width="360">
+   <tr>
+      <td colspan="2" bgcolor="white">
+  
+	<table class="cart">
+		<tr>
+			<td>
     <%= "Número do pedido: #{pedido.id + 785236621}" %><br/>
     <%= "O Status do seu pedido é: #{pedido.status}" %><br/>
     <%= "O Status da Entrega é: #{pedido.entrega}" %><br/>
@@ -61,6 +73,9 @@
     <%= unless pedido.produto3.blank? then "#{pedido.qnt3} x #{pedido.produto3}" end %><br/>
     <%= unless pedido.produto4.blank? then "#{pedido.qnt4} x #{pedido.produto4}" end %>
     <%= button_to 'Atualizar', "/atualizar/#{pedido.id}"%><br/><br/>
+
+</td></tr></table>
+</td></tr></table>
   <% end %>
 </div>
 

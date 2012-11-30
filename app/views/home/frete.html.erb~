@@ -26,6 +26,9 @@
                 <li><a href="/index" class="">Produtos</a></li>
                 <li><a href="/cart" class="">Meu Carrinho</a></li>
                 <li><a href="/customer_support" class="">Atendimento</a></li>
+		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
+		<li><a href="/" class="">Logout</a></li>
+
 
               </ul>
             </div>
@@ -52,6 +55,8 @@
   <br/><br/>
 
   <h3>A entrega custará <%= "#{@frete.last}" %> reais e levará <%= "#{@frete.first}" %> dias para chegar.</h3><br/>
+
+  <input name='id' value='123321123321' type='hidden' />
   
   <%= button_to 'Gostaria de mudar o serviço', :back %> <br/>
   <%= button_to 'Gostaria de ir ao pagamento', '/payment' %>

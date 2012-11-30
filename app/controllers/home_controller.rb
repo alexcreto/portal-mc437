@@ -213,6 +213,8 @@ class HomeController < ApplicationController
     transportadora = transportadora.to_i + 1 #meu frete@@
     transportadora = transportadora % 4 #meu frete@@
     @frete = [rand(3)+transportadora*2, frete] #meu frete@@
+
+    session[:total] = (session[:total].to_i + @frete.last).to_s
   end
 
   def transporte
