@@ -12,6 +12,7 @@ class HomeController < ApplicationController
   def login
     #reset_session
     #pp session
+    session.delete :client
     @client.login(params[:cpf], params[:senha])
     if @client.logger.logged
       session[:client] = Array.new
@@ -52,6 +53,7 @@ class HomeController < ApplicationController
   end
 
   def payment
+    if session[:client].blank? then redirect_to "/" and return false end
     client = Savon.client "http://staff01.lab.ic.unicamp.br:8480/ModuloValidacaoCreditoWS/services/ValidacaoCreditoService?wsdl"
     score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
     @score = score.to_hash[:get_score_response][:return][:score]
@@ -77,6 +79,7 @@ class HomeController < ApplicationController
   end
 
   def boleto
+    if session[:client].blank? then redirect_to "/" and return false end
     produtos = Array.new
     prod = Array.new
     session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
@@ -118,13 +121,13 @@ class HomeController < ApplicationController
     end
 
 
-    Pedido.create(:cpf => session[:client].last, :status => 0,
+    Pedido.create(:cpf => session[:client].last, :status => "Aguardando Pagamento",
                    :produto1 => produto1, :qnt1 => produtos[1],
                    :produto2 => produto2, :qnt2 => produtos[3],
                    :produto3 => produto3, :qnt3 => produtos[5],
                    :produto4 => produto4, :qnt4 => produtos[6],
 
-                   :entrega => "Aguardando Coleta", :codigo => "Aguardando Pagamento")
+                   :entrega => "Aguardando Coleta")
 
     total = 0
     cart = session[:cart] ||= {}
@@ -155,6 +158,7 @@ class HomeController < ApplicationController
   end
 
   def entrega
+    if session[:client].blank? then redirect_to "/" and return false end
     result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{session[:client].last}.json"
     session[:cep] = result["cep"]
     client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
@@ -164,6 +168,7 @@ class HomeController < ApplicationController
   end
 
   def entregaalt
+    if session[:client].blank? then redirect_to "/" and return false end
     session[:cep] = params[:cep]
     client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
     address = client.request :g02_busca_por_cep, :body => { :cep => params[:cep] }
@@ -172,6 +177,7 @@ class HomeController < ApplicationController
   end
 
   def frete
+    if session[:client].blank? then redirect_to "/" and return false end
     produtos = Array.new
     #session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}    
     cep = session[:cep]
@@ -190,14 +196,17 @@ class HomeController < ApplicationController
   end
 
   def transporte
+    if session[:client].blank? then redirect_to "/" and return false end
     
   end
   
   def meuspedidos
+    if session[:client].blank? then redirect_to "/" and return false end
     @pedidos = Pedido.find_all_by_cpf(session[:client].last)
   end
 
   def cart
+    if session[:client].blank? then redirect_to "/" and return false end
     
   end
 
@@ -206,6 +215,7 @@ class HomeController < ApplicationController
   end
 
   def cartao
+    if session[:client].blank? then redirect_to "/" and return false end
 	
 	body = Hash.new
 	body[:token]="1"

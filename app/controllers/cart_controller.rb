@@ -9,6 +9,7 @@ class CartController < ApplicationController
   end
 
   def index
+    if session[:client].blank? then redirect_to "/" and return false end
     @cart = session[:cart] || {}
   end
   

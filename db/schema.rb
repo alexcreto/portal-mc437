@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129222432) do
+ActiveRecord::Schema.define(:version => 20121130005222) do
 
   create_table "items", :force => true do |t|
     t.string   "title"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20121129222432) do
 
   create_table "pedidos", :force => true do |t|
     t.string   "cpf"
-    t.integer  "status"
     t.integer  "pedidos"
     t.string   "entrega"
     t.datetime "created_at", :null => false
@@ -37,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20121129222432) do
     t.integer  "qnt3"
     t.string   "produto4"
     t.integer  "qnt4"
+    t.string   "status"
   end
 
 end
