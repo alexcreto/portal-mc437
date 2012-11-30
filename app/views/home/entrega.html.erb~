@@ -43,30 +43,23 @@
 
 
 
+<h1>Escolha o endereço para a entrega</h1>
 
-
-
-<div>
-  <h1>Escolha o endereço para entrega</h1>
-
-  <br/>
-
-
-  <% if @address[:g02_busca_por_cep_response][:erro] != "0" %>
-  <p id="notice">Endereço inválido</p>
-  <% end %>
-
-  <% if @address[:g02_busca_por_cep_response][:erro] == "0" %>
 
 <table cellspacing="1" cellpadding="0" border="0"
- bgcolor="black" id="shell" height="80" width="360">
+ bgcolor="black" id="shell" height="60" width="340">
    <tr>
       <td colspan="2" bgcolor="white">
   
 	<table class="cart">
 		<tr>
 			<td>
-  <h3>Gostaria de receber no seguinte endereço?</h3><br/>
+<div>
+  
+
+  <br/>
+
+  <h2>Gostaria de receber no seguinte endereço?</h2><br/>
   <%= "#{@address[:g02_busca_por_cep_response][:tipo]} #{@address[:g02_busca_por_cep_response][:logradouro]}" %><br/>
   Número: <%= @numero %><br/>
   Bairro: <%= @address[:g02_busca_por_cep_response][:bairro] %><br/>
@@ -76,14 +69,14 @@
   <br/>
 
   <%= button_to 'Sim, prosseguir para a logística', "/transporte" %>
-
-</td></tr></table>
-</td></tr></table>
-
   <br/>
 
-  <% end %>
-  <h3>Gostaria de escolher outro endereço?</h3><br/>
+</td></tr></table>
+</td></tr></table>
+
+
+
+  <h2>Ou gostaria de escolher outro endereço?</h2><br/>
 
   <%= form_tag('/entregaalt') do %>
 
@@ -103,10 +96,6 @@
 <% end %>
 
 </div>
-
-  <br/>
-
-  <%= button_to 'Gostaria de usar meu endereço cadastrado', "/entrega" %>
 
 
   <br/><br/>

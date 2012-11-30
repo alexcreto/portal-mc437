@@ -163,8 +163,8 @@ class HomeController < ApplicationController
   def cartao
 	
 	body = Hash.new
-	body[:token]="10"
-	body[:value] = "1000"
+	body[:token]="1"
+	body[:value] = "270.50"
 	body[:brand] = params[:bandeira]
 	body[:number] = params[:numero].to_s
 	body[:name] = session[:client].first.to_s
