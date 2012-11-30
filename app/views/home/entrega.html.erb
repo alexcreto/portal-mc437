@@ -43,28 +43,40 @@
 
 
 
+<h1>Escolha o endereço para a entrega</h1>
 
 
-
+<table cellspacing="1" cellpadding="0" border="0"
+ bgcolor="black" id="shell" height="60" width="340">
+   <tr>
+      <td colspan="2" bgcolor="white">
+  
+	<table class="cart">
+		<tr>
+			<td>
 <div>
-  <h2>Escolha o endereço</h2>
+  
 
-  <br/><br/>
+  <br/>
 
-  <h3>Gostaria de receber no seguinte endereço?</h3><br/>
+  <h2>Gostaria de receber no seguinte endereço?</h2><br/>
   <%= "#{@address[:g02_busca_por_cep_response][:tipo]} #{@address[:g02_busca_por_cep_response][:logradouro]}" %><br/>
   Número: <%= @numero %><br/>
   Bairro: <%= @address[:g02_busca_por_cep_response][:bairro] %><br/>
   Cidade: <%= "#{@address[:g02_busca_por_cep_response][:cidade]} - #{@address[:g02_busca_por_cep_response][:uf]}" %>
 
 
-  <br/><br/>
+  <br/>
 
   <%= button_to 'Sim, prosseguir para a logística', "/transporte" %>
-  <br/><br/>
+  <br/>
+
+</td></tr></table>
+</td></tr></table>
 
 
-  <h3>Ou gostaria de escolher outro endereço?</h3><br/>
+<br/>
+  <h2>Ou gostaria de escolher outro endereço?</h2><br/>
 
   <%= form_tag('/entregaalt') do %>
 

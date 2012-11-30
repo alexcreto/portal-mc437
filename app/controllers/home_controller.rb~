@@ -10,6 +10,8 @@ class HomeController < ApplicationController
   end
   
   def login
+    #reset_session
+    #pp session
     @client.login(params[:cpf], params[:senha])
     if @client.logger.logged
       session[:client] = Array.new
@@ -25,7 +27,7 @@ class HomeController < ApplicationController
   end
 
   def index
-    if params[:name].blank?
+    if params[:name].blank? && params[:category].blank?
       @produtos = Products.new.search nil, nil
     else
       @produtos = Products.new.search params[:category], params[:name]
@@ -103,7 +105,7 @@ class HomeController < ApplicationController
         end
       end
     end
-    session[:cart] = {}
+    session.delete :cart
 
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
@@ -137,6 +139,7 @@ class HomeController < ApplicationController
   def frete
     produtos = Array.new
     session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
+    pp produtos
     cep = session[:cep]
     transportadora = params[:servico]
     session[:trans] = transportadora
@@ -160,15 +163,15 @@ class HomeController < ApplicationController
   def cartao
 	
 	body = Hash.new
-	body[:token]="10"
-	body[:value] = "10.00"
+	body[:token]="1"
+	body[:value] = "270.50"
 	body[:brand] = params[:bandeira]
 	body[:number] = params[:numero].to_s
 	body[:name] = session[:client].first.to_s
 	body[:cpf] = session[:client].last.to_s
 	body[:code] = params[:cod].to_s
 	body[:date] = params[:data].to_s
-	body[:installments] = "1"
+	#body[:installments] = "1"
   	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
   	transaction = client.request :doTransaction, :body => body 
   	@transaction = transaction.to_hash
