@@ -140,11 +140,11 @@ class Products
   def search categoria, nome
     body = Hash.new
 
-    unless categoria.nil?
+    if !categoria.nil? && ! categoria.blank?
       body[:categoria] = categoria
     end
 
-    unless nome.nil?
+    if !nome.nil? && ! nome.blank?
       body[:nome] = nome
     end
 

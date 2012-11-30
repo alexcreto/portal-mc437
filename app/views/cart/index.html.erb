@@ -18,10 +18,8 @@
         <td align="right" class="legend">Total</td>
     </tr>
     
-<% itens = Products.new.search nil, nil %>
 <% @cart.each do | id, quantidade | %>
-    <% itens.each do | item | %>
-        <% if item.codigo == id %>
+    <%item = Products.new.getByCod id%>
             <tr>
                 <td><%=image_tag(item.imagem, :size => "100x100") %></td>
                 <td class="title"><%= item.nome %></td>
@@ -32,8 +30,6 @@
             </tr>
         <% total += quantidade * item.preco %>
         <% session[:total] = total %>
-        <% end %>
-    <% end %>
 <% end %>
 
     <tr><br/><br/><br/><h2>
