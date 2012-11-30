@@ -26,6 +26,9 @@
                 <li><a href="/index" class="">Produtos</a></li>
                 <li><a href="/cart" class="">Meu Carrinho</a></li>
                 <li><a href="/customer_support" class="">Atendimento</a></li>
+		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
+		<li><a href="/" class="">Logout</a></li>
+
 
               </ul>
             </div>
@@ -49,7 +52,7 @@
   <h2>Valor da Compra: R$ <%= @precofinal %></h2><br/>
   <h2>Escolha a forma de pagamento</h2>
 
-  <% if @score == "X" then %>
+  <% if @score == "O" then %>
     <ul>
       <li>Infelizmente você não está apto a comprar conosco ainda. Entre em contato com o Atendimento para mais informações.</li>
     </ul>
@@ -59,6 +62,8 @@
     <ul>
       <%= button_to 'Pagar com Boleto', '/boleto' %><br/><br/>
     </ul>
+
+ <% end %>
 
     <% if @score == "O" %>
       <div>
@@ -90,7 +95,6 @@
   </div>
 <% end %>
 </div>
-    <% end %>
 
   <% end %>
 </div>
