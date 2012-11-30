@@ -26,6 +26,9 @@
                 <li><a href="/index" class="">Produtos</a></li>
                 <li><a href="/cart" class="">Meu Carrinho</a></li>
                 <li><a href="/customer_support" class="">Atendimento</a></li>
+		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
+		<li><a href="/" class="">Logout</a></li>
+
 
               </ul>
             </div>
@@ -38,11 +41,13 @@
 
 
 
-<%= @transaction %>
-<% pp @transaction %>
+
+<% if @transaction == 0 %>
+<h2>Transação inválida para os seguintes dados:</h2>
+<% body[:token] %>
 <br/>
 <br/>
-<%= @BODY %>
+<% end %>
 
 
 

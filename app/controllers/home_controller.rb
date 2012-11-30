@@ -61,7 +61,7 @@ class HomeController < ApplicationController
 
 
 
-    @precofinal = session[:total]
+    @precofinal = session[:total_frete].to_f
     @cpf = session[:client].last
 
     #POG fantastico abaixo
@@ -307,7 +307,7 @@ if @cpf == "92534441183"
     body["cnpj_contrato_convenio"] = "44.867.477/0001-44"
     body[:token] = "54d45bc31c9f63c37b0108e615cb9077"
     body[:cliente] = session[:client].first
-    body[:valor] = total
+    body[:valor] = session[:total_frete].to_f
 
     b = banco.request :emitir_boleto, :body => body
     b = b.to_hash
@@ -360,6 +360,8 @@ if @cpf == "92534441183"
     transportadora = transportadora.to_i + 1 #meu frete@@
     transportadora = transportadora % 4 #meu frete@@
     @frete = [rand(3)+transportadora*2+2, frete] #meu frete@@
+
+    session[:total_frete] = (session[:total].to_i + @frete.last).to_s
   end
 
   def transporte
@@ -410,7 +412,7 @@ if @cpf == "92534441183"
 	
 	body = Hash.new
 	body[:token]="1"
-	body[:value] = "270.50"
+	body[:value] = session[:total_frete]
 	body[:brand] = params[:bandeira]
 	body[:number] = params[:numero].to_s
 	body[:name] = session[:client].first.to_s
@@ -420,8 +422,16 @@ if @cpf == "92534441183"
 	body[:installments] = "1"
   	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
   	transaction = client.request :doTransaction, :body => body 
-  	@transaction = transaction.to_hash
-	@BODY = body
+  	@transaction = transaction.to_hash[:do_transaction_response][:return].to_i
+	@token = body[:token]
+	@value = body[:value] 
+	@brand = body[:brand] 
+	@number= body[:number] 
+	@name = body[:name] 
+	@cpf = body[:cpf] 
+	@code = body[:code] 
+	@date = body[:date] 
+	@installments = body[:installments]
   end
 
 end

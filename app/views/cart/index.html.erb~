@@ -21,6 +21,15 @@
 <% @cart.each do | id, quantidade | %>
     <%item = Products.new.getByCod id%>
 
+<table cellspacing="1" cellpadding="0" border="0"
+ bgcolor="black" id="shell" height="40" width="600">
+   <tr>
+      <td colspan="2" bgcolor="white">
+  
+	<table class="cart">
+		<tr>
+			<td>
+
 
             <tr>
                 <td><%=image_tag(item.imagem, :size => "100x100") %></td>
@@ -32,6 +41,8 @@
             </tr>
         <% total += quantidade * item.preco %>
         <% session[:total] = total %>
+
+</td></tr></table></td></tr></table>
 <% end %>
 
     <tr><br/><br/><br/><h2>
