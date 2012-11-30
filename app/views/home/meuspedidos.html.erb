@@ -51,7 +51,17 @@
 
   <br/><br/>
 
-  
+  <%= @pedidos.each do |pedido| %>
+    <%= "Número do pedido: #{pedido.codigo}" %>
+    <%= "O Status do seu pedido é: #{pedido.status}" %>
+    <%= "O Status da Entrega é: #{pedido.entrega}" %>
+    <%= "Os produtos pedidos foram os:" %><br/>
+    <%= "#{pedido.qnt1} x #{pedido.produto1}" %>
+    <%= unless pedido.produto2.blank? "#{pedido.qnt2} x #{pedido.produto2}" end %>
+    <%= unless pedido.produto3.blank? "#{pedido.qnt3} x #{pedido.produto3}" end %>
+    <%= unless pedido.produto4.blank? "#{pedido.qnt4} x #{pedido.produto4}" end %>
+
+  <% end %>
 
 
 </div>

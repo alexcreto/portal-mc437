@@ -82,16 +82,45 @@ class HomeController < ApplicationController
     session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
 
     post_body = Hash.new
-    post_body[:id_portal] = 1
-    post_body[:cep_remetente] = 05055010
-    post_body[:cep_destinatario] = session[:cep]
-    post_body[:id_transportadora] = session[:trans]
+    post_body["id_portal"] = 1
+    post_body["cep_remetente"] = 97574220
+    post_body["cep_destinatario"] = session[:cep].to_i
+    post_body["id_transportadora"] = session[:trans]
     post_body[:produtos] = produtos
 
     post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
     cod_post = post.request :cadastrar_entrega, :body => post_body
 
-    Pedido.create(:cpf => session[:client].last, :status => 0, :pedidos => produtos, :entrega => "Aguardando Coleta", :codigo => cod_post)
+    produtos = produtos.flatten
+
+    produto2 = nil
+    produto3 = nil
+    produto4 = nil
+
+    client = Savon.client "http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl"
+    description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[0]}"}
+    produto1 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+    unless produtos[2].blank?
+      description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[2]}"}
+      produto2 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+      unless produtos[4].blank?
+        description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[4]}"}
+        produto3 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+        unless produtos[6].blank?
+          description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[6]}"}
+          produto4 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+        end
+      end
+    end
+
+
+    Pedido.create(:cpf => session[:client].last, :status => 0,
+                   :produto1 => produto1, :qnt1 => produtos[1],
+                   :produto2 => produto2, :qnt2 => produtos[3],
+                   :produto3 => produto3, :qnt3 => produtos[5],
+                   :produto4 => produto4, :qnt4 => produtos[6],
+
+                   :entrega => "Aguardando Coleta", :codigo => cod_post)
 
     total = 0
     cart = session[:cart] ||= {}
@@ -106,6 +135,8 @@ class HomeController < ApplicationController
       end
     end
     session.delete :cart
+
+
 
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
@@ -138,14 +169,20 @@ class HomeController < ApplicationController
 
   def frete
     produtos = Array.new
-    session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
-    pp produtos
+    #session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}    
     cep = session[:cep]
     transportadora = params[:servico]
     session[:trans] = transportadora
     client = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
-    trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 05055010, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
-    @frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]
+    #trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 97574220, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
+    #@frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]
+    
+
+    frete = 0 #meu frete@@
+    session[:cart].map {|c| frete += (rand(3)+13) * c[1]} #meu frete@@
+    transportadora = transportadora.to_i + 1 #meu frete@@
+    transportadora = transportadora % 4 #meu frete@@
+    @frete = [rand(3)+transportadora*2, frete] #meu frete@@
   end
 
   def transporte

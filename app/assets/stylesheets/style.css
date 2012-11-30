@@ -24,6 +24,24 @@ a:active, a:hover { color: #990000; text-decoration: underline;	}
 	text-decoration: none;
 }
 
+.cart {
+border-spacing: 10px;
+}
+
+.legend{
+	font-weight: bold;
+}
+
+
+.productList{
+	border-spacing: 10px;
+}
+
+.preco{
+	text-align: right;
+	font-weight: bold;
+}
+
 .button_01 a:hover {
 	color: #666;
     background: url(/assets/button_hover.png) no-repeat;
