@@ -40,6 +40,9 @@
 
 <%= @transaction %>
 <% pp @transaction %>
+<br/>
+<br/>
+<%= @BODY %>
 
 
 

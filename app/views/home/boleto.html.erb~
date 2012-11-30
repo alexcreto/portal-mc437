@@ -38,18 +38,24 @@
 
 
 
+
+
+
+
+
+
+
+
 <div>
-<h2>Atendimento</h2>
+  <h2>Sua compra foi finalizada com sucesso</h2><br/>
+  <h3>Estamos esperando o pagamento do boleto</h3><br/><br/>
 
-<p>O que deseja fazer?</p>
-
-<ul>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></li>
-<!--<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></li>-->
-</ul>
+  <%= button_to 'Ver meus pedidos', '/meuspedidos' %>
+  <br/><br/>
+  <%= button_to 'Comprar mais!', '/index' %>
+  <br/><br/>
 </div>
+
 
 
 

@@ -38,28 +38,35 @@
 
 
 
+
+
+
+
+
+
+
+
 <div>
-<h2>Atendimento</h2>
+  <h2>Escolha a forma de envio</h2>
 
-<p>O que deseja fazer?</p>
+  <br/><br/>
 
-<ul>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></li>
-<!--<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></li>-->
-</ul>
-</div>
+  <h3>Gostaria de receber através de qual serviço?</h3><br/>
+  
+  <%= form_tag('/frete') do %>
 
-
-
-
-
-
-
+    <div>
+      <%= select_tag(:servico, options_for_select([['Sedex', 1], ['E-Sedex', 2], ['PAC', 3], ['Fedex', 4]])) %>
+    </div>
+<br/>
+    <div>
+      <%= submit_tag 'Ver Frete' %>
+    </div>
+  <% end %>
 
 </div>
 
+  <br/><br/>
 
 
         <div id="footer">

@@ -38,18 +38,19 @@
 
 
 
+
+
+
+
+
+
+
+
 <div>
-<h2>Atendimento</h2>
-
-<p>O que deseja fazer?</p>
-
-<ul>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></li>
-<!--<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></li>-->
-</ul>
+  <h2>Sua compra foi finalizada com sucesso</h2><br/>
+  <h3>Estamos esperando o pagamento do boleto</h3>
 </div>
+
 
 
 

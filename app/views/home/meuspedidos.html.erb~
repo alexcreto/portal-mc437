@@ -38,28 +38,33 @@
 
 
 
+
+
+
+
+
+
+
+
 <div>
-<h2>Atendimento</h2>
+  <h2>Meus pedidos</h2>
 
-<p>O que deseja fazer?</p>
+  <br/><br/>
 
-<ul>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/CriarTicket.php">Criar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicket.php">Consultar Ticket</a></li>
-<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ConsultarTicketCPF.php">Consultar Ticket por CPF e Grupo</a></li>
-<!--<li><a href="http://mpsolucoesweb.com.br/atendimento-cliente/ResponderTicket.php">Responder Ticket</a></li>-->
-</ul>
+  <%= @pedidos.each do |pedido| %>
+    <%= "Número do pedido: #{pedido.id + 785236621}" %><br/>
+    <%= "O Status do seu pedido é: #{pedido.status}" %><br/>
+    <%= "O Status da Entrega é: #{pedido.entrega}" %><br/>
+    <%= "Os produtos pedidos foram os:" %><br/>
+    <%= "#{pedido.qnt1} x #{pedido.produto1}" %><br/>
+    <%= unless pedido.produto2.blank? then "#{pedido.qnt2} x #{pedido.produto2}" end %><br/>
+    <%= unless pedido.produto3.blank? then "#{pedido.qnt3} x #{pedido.produto3}" end %><br/>
+    <%= unless pedido.produto4.blank? then "#{pedido.qnt4} x #{pedido.produto4}" end %>
+    <%= button_to 'Atualizar', "/atualizar/#{pedido.id}"%><br/><br/>
+  <% end %>
 </div>
 
-
-
-
-
-
-
-
-</div>
-
+  <br/><br/>
 
 
         <div id="footer">

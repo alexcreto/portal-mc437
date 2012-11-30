@@ -117,14 +117,14 @@
 </div>
 </div>
 
-
+<div align="center">
 <% for produto in @produtos %>
 <table cellspacing="1" cellpadding="0" border="0"
- bgcolor="black" id="shell" height="250" width="800">
+ bgcolor="black" id="shell" height="250" width="900">
    <tr>
       <td colspan="2" bgcolor="white">
   
-<table class="cart">
+<table class="productList">
 
 
   <tr>
@@ -139,8 +139,6 @@
   </tr>
 
   <tr>
-    <td></td>
-    <td></td>
     <td><h2>Preço: R$ <%=produto.preco%></h2></td>
     <td><%= button_to "Comprar", "/cart/add/#{produto.codigo}", :method => :post, :id => produto.codigo %></td>
   </tr>
@@ -151,6 +149,7 @@
    </tr>
 </table>
 <%end%>
+</div>
 
 
 

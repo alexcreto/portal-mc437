@@ -75,7 +75,7 @@
 </td></tr></table>
 
 
-
+<br/>
   <h2>Ou gostaria de escolher outro endereço?</h2><br/>
 
   <%= form_tag('/entregaalt') do %>
