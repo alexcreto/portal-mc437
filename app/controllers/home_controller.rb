@@ -198,11 +198,21 @@ class HomeController < ApplicationController
   end
 
   def cartao
-
+	
+	body = Hash.new
+	body[:token]="10"
+	body[:value] = "1000"
+	body[:brand] = params[:bandeira]
+	body[:number] = params[:numero].to_s
+	body[:name] = session[:client].first.to_s
+	body[:cpf] = session[:client].last.to_s
+	body[:code] = params[:cod].to_s
+	body[:date] = params[:data].to_s
+	body[:installments] = "1"
   	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
-  	transaction = client.request :doTransaction, :body => { :token => 1, :value => session[:total] , :brand => params[:bandeira] , :number => params[:numero] , :name => session[:client].first , :cpf => session[:client].last , :code => params[:cod] , :date => params[:data] }
+  	transaction = client.request :doTransaction, :body => body 
   	@transaction = transaction.to_hash
-
+	@BODY = body
   end
 
 end
