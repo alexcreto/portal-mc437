@@ -286,15 +286,6 @@ if @cpf == "92534441183"
       end
     end
 
-
-    Pedido.create(:cpf => session[:client].last, :status => "Aguardando Pagamento",
-                   :produto1 => produto1, :qnt1 => produtos[1],
-                   :produto2 => produto2, :qnt2 => produtos[3],
-                   :produto3 => produto3, :qnt3 => produtos[5],
-                   :produto4 => produto4, :qnt4 => produtos[6],
-
-                   :entrega => "Aguardando Coleta", :pedidos => session[:boleto])
-
     total = 0
     cart = session[:cart] ||= {}
     itens = Products.new.search nil, nil 
@@ -310,7 +301,6 @@ if @cpf == "92534441183"
     session.delete :cart
 
 
-
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
     body = Hash.new
@@ -321,7 +311,16 @@ if @cpf == "92534441183"
 
     b = banco.request :emitir_boleto, :body => body
     b = b.to_hash
-    session[:boleto] = b[:emitir_boleto_response][:return][:id]
+    boleto_id = b[:emitir_boleto_response][:return][:id]
+
+    Pedido.create(:cpf => session[:client].last, :status => "Aguardando Pagamento",
+                   :produto1 => produto1, :qnt1 => produtos[1],
+                   :produto2 => produto2, :qnt2 => produtos[3],
+                   :produto3 => produto3, :qnt3 => produtos[5],
+                   :produto4 => produto4, :qnt4 => produtos[6],
+
+                   :entrega => "Aguardando Coleta", :pedidos => boleto_id)
+
 
   end
 
@@ -360,7 +359,7 @@ if @cpf == "92534441183"
     session[:cart].map {|c| frete += (rand(3)+13) * c[1]} #meu frete@@
     transportadora = transportadora.to_i + 1 #meu frete@@
     transportadora = transportadora % 4 #meu frete@@
-    @frete = [rand(3)+transportadora*2, frete] #meu frete@@
+    @frete = [rand(3)+transportadora*2+2, frete] #meu frete@@
   end
 
   def transporte
@@ -396,9 +395,12 @@ if @cpf == "92534441183"
 
     b = banco.request :obter_boleto, :body => body
     b = b.to_hash
-
     status = b[:obter_boleto_response][:return][:estado]
-    if status == 3 then Pedido.find_by_pedidos(id).status = "Pedido Pago" end
+    if status == "3"
+      p = Pedido.find_by_pedidos(id)
+      p.status = "Pedido Pago" 
+      p.save
+    end
 
     redirect_to :back and return false
   end

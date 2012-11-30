@@ -23,11 +23,15 @@
               <ul>
 
                 <li><a href="/index" class="current">Home</a></li>
-                <li><a href="/index" class="">Produtos</a></li>
+                <li><a href="/index" class="">Produtos</a></li><% unless session[:client].blank? then %>
                 <li><a href="/cart" class="">Meu Carrinho</a></li>
                 <li><a href="/customer_support" class="">Atendimento</a></li>
 		<li><a href="/meuspedidos" class="">Meus Pedidos</a></li>
-		<li><a href="/" class="">Logout</a></li>
+		<li><a href="/" class="">Logout</a></li><% else %>
+<li><a href="/" class="current">Entrar</a></li>
+
+
+    <% end %>
 
 
               </ul>
