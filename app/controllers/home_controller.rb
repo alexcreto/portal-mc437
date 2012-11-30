@@ -127,7 +127,7 @@ class HomeController < ApplicationController
                    :produto3 => produto3, :qnt3 => produtos[5],
                    :produto4 => produto4, :qnt4 => produtos[6],
 
-                   :entrega => "Aguardando Coleta")
+                   :entrega => "Aguardando Coleta", :pedidos => session[:boleto])
 
     total = 0
     cart = session[:cart] ||= {}
@@ -153,7 +153,9 @@ class HomeController < ApplicationController
     body[:cliente] = session[:client].first
     body[:valor] = total
 
-    banco.request :emitir_boleto, :body => body
+    b = banco.request :emitir_boleto, :body => body
+    b = b.to_hash
+    session[:boleto] = b[:emitir_boleto_response][:return][:id]
 
   end
 
@@ -212,6 +214,27 @@ class HomeController < ApplicationController
 
   def customer_support
     
+  end
+
+  def atualizar
+
+    id = Pedido.find(params[:id]).pedidos
+
+    banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
+    
+    body = Hash.new
+    body["cnpj_contrato_convenio"] = "44.867.477/0001-44"
+    body[:token] = "54d45bc31c9f63c37b0108e615cb9077"
+    body[:cliente] = session[:client].first
+    body[:id] = id
+
+    b = banco.request :obter_boleto, :body => body
+    b = b.to_hash
+
+    status = b[:obter_boleto_response][:return][:estado]
+    if status == 3 then Pedido.find_by_pedidos(id).status = "Pedido Pago" end
+
+    redirect_to :back and return false
   end
 
   def cartao

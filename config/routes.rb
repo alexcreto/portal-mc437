@@ -19,6 +19,8 @@ PortalMc437::Application.routes.draw do
   post "/boleto" => "home#boleto"
   get "/boleto" => "home#boleto"
 
+  post "/atualizar/:id" => "home#atualizar"
+
   post "/payment" => "home#payment"
   get "/payment" => "home#payment"
   get "/customer_support" => "home#customer_support"

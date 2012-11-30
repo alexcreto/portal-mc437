@@ -24,6 +24,14 @@ a:active, a:hover { color: #990000; text-decoration: underline;	}
 	text-decoration: none;
 }
 
+#finaliza{
+	text-align: center;
+}
+
+.linkCart{
+	font-weight: bold;
+	font-family: verdana;
+}
 .cart {
 border-spacing: 10px;
 }
