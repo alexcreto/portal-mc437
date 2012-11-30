@@ -41,11 +41,25 @@
 
 
 
-<%= @transaction %>
-<% pp @transaction %>
+
+<% if @transaction == 0 %>
+<h2>Transação inválida para os seguintes dados:</h2>
+
+  <p>Token: <%= @token %></p>
+  <p>Value: <%= @value %></p>
+  <p>Brand: <%= @brand %></p>
+  <p>Number: <%= @number %></p>
+  <p>Name: <%= @name %></p>
+  <p>CPF: <%= @cpf %></p>
+  <p>Code: <%= @code %></p>
+  <p>Date: <%= @date %></p>
+  <p>Installments: <%= @installments %></p>
+	
 <br/>
 <br/>
-<%= @BODY %>
+<%else%>
+<h2> Transação efeituada com sucesso</h2>
+<% end %>
 
 
 
