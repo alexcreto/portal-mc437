@@ -88,14 +88,18 @@ class HomeController < ApplicationController
     post_body["id_transportadora"] = session[:trans]
     post_body[:produtos] = produtos
 
-    post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
-    cod_post = post.request :cadastrar_entrega, :body => post_body
+    #post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
+    #cod_post = post.request :cadastrar_entrega, :body => post_body
 
     produtos = produtos.flatten
 
     produto2 = nil
     produto3 = nil
     produto4 = nil
+    qnt1 = produtos[1] ||= nil
+    qnt2 = produtos[3] ||= nil
+    qnt3 = produtos[5] ||= nil
+    qnt4 = produtos[7] ||= nil
 
     client = Savon.client "http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl"
     description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[0]}"}
@@ -120,7 +124,7 @@ class HomeController < ApplicationController
                    :produto3 => produto3, :qnt3 => produtos[5],
                    :produto4 => produto4, :qnt4 => produtos[6],
 
-                   :entrega => "Aguardando Coleta", :codigo => cod_post)
+                   :entrega => "Aguardando Coleta", :codigo => "Aguardando Pagamento")
 
     total = 0
     cart = session[:cart] ||= {}
@@ -189,6 +193,10 @@ class HomeController < ApplicationController
     
   end
   
+  def meuspedidos
+    @pedidos = Pedido.find_all_by_cpf(session[:client].last)
+  end
+
   def cart
     
   end
