@@ -61,18 +61,36 @@ class HomeController < ApplicationController
     @precofinal = session[:total]
 
     case @score
+    when "x"
+      @score = "X"
+    when "X"
+      @score = "X"
     when "A"
       @score = "O"
+    when "a"
+      @score = "O"
+    when "b"
+      if @precofinal < 2000.00
+        @score = "O"
+      end
+    when "c"
+      if @precofinal < 1000.00
+        @score = "O"
+      end
+    when "d"
+      if @precofinal < 500.00
+        @score = "O"
+      end
     when "B"
-      if session[:total] < 2000
+      if @precofinal < 2000.00
         @score = "O"
       end
     when "C"
-      if session[:total] < 1000
+      if @precofinal < 1000.00
         @score = "O"
       end
     when "D"
-      if session[:total] < 500
+      if @precofinal < 500.00
         @score = "O"
       end
     end

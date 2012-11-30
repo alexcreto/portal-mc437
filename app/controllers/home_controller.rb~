@@ -12,6 +12,7 @@ class HomeController < ApplicationController
   def login
     #reset_session
     #pp session
+    session.delete :client
     @client.login(params[:cpf], params[:senha])
     if @client.logger.logged
       session[:client] = Array.new
@@ -52,6 +53,7 @@ class HomeController < ApplicationController
   end
 
   def payment
+    if session[:client].blank? then redirect_to "/" and return false end
     client = Savon.client "http://staff01.lab.ic.unicamp.br:8480/ModuloValidacaoCreditoWS/services/ValidacaoCreditoService?wsdl"
     score = client.request :getScore, :body => { :cpf => session[:client].last, :token => "0123456789"}
     @score = score.to_hash[:get_score_response][:return][:score]
@@ -77,21 +79,55 @@ class HomeController < ApplicationController
   end
 
   def boleto
+    if session[:client].blank? then redirect_to "/" and return false end
     produtos = Array.new
     prod = Array.new
     session[:cart].map {|c| produtos << prod = [c[0].to_i, c[1]]}
 
     post_body = Hash.new
-    post_body[:id_portal] = 1
-    post_body[:cep_remetente] = 05055010
-    post_body[:cep_destinatario] = session[:cep]
-    post_body[:id_transportadora] = session[:trans]
+    post_body["id_portal"] = 1
+    post_body["cep_remetente"] = 97574220
+    post_body["cep_destinatario"] = session[:cep].to_i
+    post_body["id_transportadora"] = session[:trans]
     post_body[:produtos] = produtos
 
-    post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
-    cod_post = post.request :cadastrar_entrega, :body => post_body
+    #post = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
+    #cod_post = post.request :cadastrar_entrega, :body => post_body
 
-    Pedido.create(:cpf => session[:client].last, :status => 0, :pedidos => produtos, :entrega => "Aguardando Coleta", :codigo => cod_post)
+    produtos = produtos.flatten
+
+    produto2 = nil
+    produto3 = nil
+    produto4 = nil
+    qnt1 = produtos[1] ||= nil
+    qnt2 = produtos[3] ||= nil
+    qnt3 = produtos[5] ||= nil
+    qnt4 = produtos[7] ||= nil
+
+    client = Savon.client "http://staff01.lab.ic.unicamp.br:8080/ProdUNICAMPServices/services/Servicos?wsdl"
+    description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[0]}"}
+    produto1 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+    unless produtos[2].blank?
+      description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[2]}"}
+      produto2 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+      unless produtos[4].blank?
+        description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[4]}"}
+        produto3 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+        unless produtos[6].blank?
+          description = client.request :get_produto_by_codigo, :body => { :codigo => "#{produtos[6]}"}
+          produto4 = description.to_hash[:get_produto_by_codigo_response][:return][:nome]
+        end
+      end
+    end
+
+
+    Pedido.create(:cpf => session[:client].last, :status => "Aguardando Pagamento",
+                   :produto1 => produto1, :qnt1 => produtos[1],
+                   :produto2 => produto2, :qnt2 => produtos[3],
+                   :produto3 => produto3, :qnt3 => produtos[5],
+                   :produto4 => produto4, :qnt4 => produtos[6],
+
+                   :entrega => "Aguardando Coleta", :pedidos => session[:boleto])
 
     total = 0
     cart = session[:cart] ||= {}
@@ -107,6 +143,8 @@ class HomeController < ApplicationController
     end
     session.delete :cart
 
+
+
     banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
     
     body = Hash.new
@@ -115,11 +153,14 @@ class HomeController < ApplicationController
     body[:cliente] = session[:client].first
     body[:valor] = total
 
-    banco.request :emitir_boleto, :body => body
+    b = banco.request :emitir_boleto, :body => body
+    b = b.to_hash
+    session[:boleto] = b[:emitir_boleto_response][:return][:id]
 
   end
 
   def entrega
+    if session[:client].blank? then redirect_to "/" and return false end
     result = Nestful.json_get "http://mc437.herokuapp.com/tudo/#{session[:client].last}.json"
     session[:cep] = result["cep"]
     client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
@@ -129,6 +170,7 @@ class HomeController < ApplicationController
   end
 
   def entregaalt
+    if session[:client].blank? then redirect_to "/" and return false end
     session[:cep] = params[:cep]
     client = Savon.client "http://g2mc437.heliohost.org/parte2/service/webserver.php?wsdl"
     address = client.request :g02_busca_por_cep, :body => { :cep => params[:cep] }
@@ -137,22 +179,36 @@ class HomeController < ApplicationController
   end
 
   def frete
+    if session[:client].blank? then redirect_to "/" and return false end
     produtos = Array.new
-    session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}
-    pp produtos
+    #session[:cart].map {|c| produtos << [c[0].to_i, c[1]]}    
     cep = session[:cep]
     transportadora = params[:servico]
     session[:trans] = transportadora
     client = Savon.client "http://staff01.lab.ic.unicamp.br/grupo9/webservice/ws.php?wsdl"
-    trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 05055010, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
-    @frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]
+    #trans = client.request :calcula_frete_e_prazo, :body => { :cep_remetente => 97574220, :cep_destinatario => cep, :id_transportadora => transportadora, :produtos => produtos }
+    #@frete = [trans.to_hash[:calcula_frete_e_prazo_response][:return][:prazo], trans.to_hash[:calcula_frete_e_prazo_response][:return][:frete]]
+    
+
+    frete = 0 #meu frete@@
+    session[:cart].map {|c| frete += (rand(3)+13) * c[1]} #meu frete@@
+    transportadora = transportadora.to_i + 1 #meu frete@@
+    transportadora = transportadora % 4 #meu frete@@
+    @frete = [rand(3)+transportadora*2, frete] #meu frete@@
   end
 
   def transporte
+    if session[:client].blank? then redirect_to "/" and return false end
     
   end
   
+  def meuspedidos
+    if session[:client].blank? then redirect_to "/" and return false end
+    @pedidos = Pedido.find_all_by_cpf(session[:client].last)
+  end
+
   def cart
+    if session[:client].blank? then redirect_to "/" and return false end
     
   end
 
@@ -160,7 +216,29 @@ class HomeController < ApplicationController
     
   end
 
+  def atualizar
+
+    id = Pedido.find(params[:id]).pedidos
+
+    banco = Savon.client "http://mc437-2012s2-banco-ws.pagodabox.com/ws/BancoApi?wsdl"
+    
+    body = Hash.new
+    body["cnpj_contrato_convenio"] = "44.867.477/0001-44"
+    body[:token] = "54d45bc31c9f63c37b0108e615cb9077"
+    body[:cliente] = session[:client].first
+    body[:id] = id
+
+    b = banco.request :obter_boleto, :body => body
+    b = b.to_hash
+
+    status = b[:obter_boleto_response][:return][:estado]
+    if status == 3 then Pedido.find_by_pedidos(id).status = "Pedido Pago" end
+
+    redirect_to :back and return false
+  end
+
   def cartao
+    if session[:client].blank? then redirect_to "/" and return false end
 	
 	body = Hash.new
 	body[:token]="1"
@@ -171,7 +249,7 @@ class HomeController < ApplicationController
 	body[:cpf] = session[:client].last.to_s
 	body[:code] = params[:cod].to_s
 	body[:date] = params[:data].to_s
-	#body[:installments] = "1"
+	body[:installments] = "1"
   	client = Savon.client "http://www.chainreactor.net/services/nusoap/WebServer.php?wsdl"
   	transaction = client.request :doTransaction, :body => body 
   	@transaction = transaction.to_hash
